@@ -28,8 +28,16 @@ export const SCAN_CONFIG = {
     quickswap: {
       factory:
         "0x05a97986a9d031c4567e15b797be516910cfcb4156312482efc6a19c0a30c948",
-      routerOrX:
+      liquidityPool:
         "0x190d44266241744264b964a37b8f09863167a12d3e70cda39376cfb4e3561e12",
+    },
+    aux: {
+      factory:
+        "0xbd35135844473187163ca197ca93b2ab014370587bb0ed3befff9e902d6bb541",
+    },
+    USDC: {
+      wallet:
+        "0xf22bede237a07e121b56d91a491eb7bcdfd1f5907926a9e58338f964a01b17fa",
     },
   },
   eth: {

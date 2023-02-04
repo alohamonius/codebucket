@@ -1,46 +1,42 @@
 import { ethers, Wallet } from "ethers";
 import { SCAN_CONFIG } from "../pure/constants";
-import {
-  AptosClient,
-  AptosAccount,
-  FaucetClient,
-  BCS,
-  TxnBuilderTypes,
-} from "aptos";
-const NODE_URL =
-  process.env.APTOS_NODE_URL || "https://fullnode.devnet.aptoslabs.com";
-const FAUCET_URL =
-  process.env.APTOS_FAUCET_URL || "https://faucet.devnet.aptoslabs.com";
+import { AptosClient } from "aptos";
 
-const aptosCoinStore = "0x1::coin::CoinStore<0x1::aptos_coin::AptosCoin>";
-const x = "0x1::coin::CoinStore<0x1::aptos_coin::AptosCoin>";
-const d = "0x1::coin::DepositEvent";
-export async function listenAptos(privateKey) {
+const APTOS_COIN = "0x1::aptos_coin::AptosCoin";
+
+function asset(account, name) {
+  return `${account}::asset::${name}`;
+}
+function struct(poolAddress, coin1, coin2) {
+  return `${poolAddress}::liquidity_pool::EventsStore<${coin1}, ${coin2}, ${poolAddress}::curves::Uncorrelated>`;
+}
+
+//USDC/APT Quickswap get events
+export async function aptosQuickswap() {
   const url = SCAN_CONFIG["apt"].rpcHttp;
+  const poolAddress = SCAN_CONFIG["apt"].quickswap.liquidityPool;
+  const usdc = SCAN_CONFIG["apt"].USDC.wallet;
+
   const client = new AptosClient(url);
+  const coin1 = asset(usdc, "USDC");
+  const eventHandleStruct = struct(poolAddress, coin1, APTOS_COIN);
 
-  const my =
-    "0xa909e657a473361b565f79d85b1ba196044cbae70342bd95559f1833b5e11738";
-  const qw = await client.getAccount(my);
-  const eew = await client.getAccountResources(my);
-
-  const weqq = await client.getEventsByEventHandle(
+  const swapEvents = await client.getEventsByEventHandle(
     SCAN_CONFIG["apt"].quickswap.factory,
-    "",
-    ""
-  );
-  const provider = new ethers.providers.JsonRpcProvider(url);
-  const signer = new Wallet(privateKey, provider);
-
-  const contract = new ethers.Contract(
-    SCAN_CONFIG["apt"].quickswap.factory,
-    [],
-    signer
+    eventHandleStruct,
+    "swap_handle"
   );
 
-  contract.on("LiquidityAddedEvent", (ee) => {
-    console.log(ee);
-  });
+  const loansEvents = await client.getEventsByEventHandle(
+    SCAN_CONFIG["apt"].quickswap.factory,
+    eventHandleStruct,
+    "flashloan_handle"
+  );
+  const poolCreatedEvents = await client.getEventsByEventHandle(
+    SCAN_CONFIG["apt"].quickswap.factory,
+    eventHandleStruct,
+    "pool_created_handle"
+  );
 }
 // event::emit_event(
 //     &mut events_store.pool_created_handle,

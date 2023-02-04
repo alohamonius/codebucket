@@ -9,7 +9,7 @@
       "type": "node",
       "request": "launch",
       "args": ["main.ts"],
-      "runtimeArgs": ["-r", "ts-node/register"],
+      "runtimeArgs": ["-r", "ts-node-esm"],
       "cwd": "${workspaceRoot}",
       "protocol": "inspector",
       "internalConsoleOptions": "openOnSessionStart"

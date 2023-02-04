@@ -7,12 +7,12 @@
     "declarationMap": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    // "module": "ESNext",
-    "moduleResolution": "node",
     "noImplicitAny": false,
-    "outDir": "./dist",
     "sourceMap": true,
-    "pretty": true
+    "pretty": true,
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "strict": true
   },
   "include": ["*.ts"],
   "paths": {

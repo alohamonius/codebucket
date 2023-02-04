@@ -2,14 +2,16 @@ import http from "http";
 import { onNewPairsAdded as onNewPoolAdded } from "./scanner/base/onNewListing";
 import { scanQuotes } from "./jobs/runner";
 import { logQuote } from "./utils/logger";
-import { listenAptos } from "./scanner/aptosQuickSwap";
+import { aptosQuickswap } from "./scanner/aptosQuickSwap";
+import { sui } from "./bot/sui";
 require("dotenv").config();
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
 
 async function main() {
   // startListetingNewPools();
-  await listenAptos(PRIVATE_KEY);
+  // await aptosQuickswap();
+  await sui();
 }
 
 function startListetingNewPools() {
