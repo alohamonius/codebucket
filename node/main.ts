@@ -1,8 +1,8 @@
 import http from "http";
-import { onNewPairsAdded as onNewPoolAdded } from "./scanner/base/onNewListing";
+import { onNewPairsAdded as onNewPoolAdded } from "./arbitrage/onNewListing";
 import { scanQuotes } from "./jobs/runner";
 import { logQuote } from "./utils/logger";
-import { aptosQuickswap } from "./scanner/aptosQuickSwap";
+import { aptosQuickswap } from "./bot/aptos/aptosQuickSwap";
 import { init } from "./bot/sui/sui";
 require("dotenv").config();
 

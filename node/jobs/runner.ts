@@ -1,5 +1,5 @@
 import { SCAN_CONFIG, INCH_CHAINS } from "../pure/constants";
-import { inchQuote } from "../scanner/1inch";
+import { inchQuote } from "../arbitrage/1inch";
 import { IPair } from "./IPair";
 
 export async function scanQuotes(

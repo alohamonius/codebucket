@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
-import { DEX_FAMILY, SCAN_CONFIG } from "../../pure/constants";
-import { keepAlive } from "../../utils/keepAlive";
+import { DEX_FAMILY, SCAN_CONFIG } from "../pure/constants";
+import { keepAlive } from "../utils/keepAlive";
 
 export function onNewPairsAdded(
   privateKey,

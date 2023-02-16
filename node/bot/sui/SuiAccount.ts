@@ -1,4 +1,4 @@
-export class MoveAccount {
+export class SuiAccount {
   public readonly publicKey: string;
   public readonly schema: string;
   public readonly privateKey: string;
@@ -43,7 +43,7 @@ export class MoveAccount {
     epoch: number,
     role: number
   ) {
-    return new MoveAccount(
+    return new SuiAccount(
       publicKey,
       privateKey,
       schema,

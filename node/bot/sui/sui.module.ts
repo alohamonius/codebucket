@@ -1,6 +1,6 @@
 import { RawSigner, Ed25519Keypair, JsonRpcProvider } from "@mysten/sui.js";
 import { fromB64 } from "@mysten/bcs";
-import { MoveAccount } from "../MoveAccount";
+import { SuiAccount } from "./SuiAccount";
 import { ethers, Wallet } from "ethers";
 import { Fs } from "../../utils/fs.module";
 //maybe not only SUI, APTOS also (MoveModule)
@@ -14,7 +14,7 @@ export namespace Sui {
 
     export function makeSigner(
       provider: JsonRpcProvider,
-      account: MoveAccount
+      account: SuiAccount
     ): RawSigner {
       const keypair = revertKeypairFromSecret(account.privateKey);
       const signer = new RawSigner(keypair, provider);
@@ -23,7 +23,7 @@ export namespace Sui {
 
     export function makeSigners(
       provider: JsonRpcProvider,
-      accounts: MoveAccount[]
+      accounts: SuiAccount[]
     ): RawSigner[] {
       return accounts.map((account) => makeSigner(provider, account));
     }
@@ -86,8 +86,8 @@ export namespace Sui {
       provider,
       count,
       path
-    ): Promise<MoveAccount[]> {
-      let generatedAccounts: MoveAccount[] = [];
+    ): Promise<SuiAccount[]> {
+      let generatedAccounts: SuiAccount[] = [];
       for (let i = 0; i < count; i++) {
         const mnemonic = Wallet.createRandom().mnemonic;
         const keypair = Ed25519Keypair.deriveKeypair(
@@ -99,7 +99,7 @@ export namespace Sui {
         const ex = keypair.export();
 
         const wallet = await signer.getAddress();
-        const account = MoveAccount.From(
+        const account = SuiAccount.From(
           wallet,
           ex.privateKey,
           ex.schema,
@@ -161,7 +161,7 @@ export namespace Sui {
 
     export async function mergeAll(
       provider: JsonRpcProvider,
-      account: MoveAccount,
+      account: SuiAccount,
       onFail
     ) {
       const coins = await provider.getAllCoins(account.publicKey);
@@ -200,7 +200,7 @@ export namespace Sui {
       return objects.filter((c) => c.type === "0x2::staking_pool::StakedSui");
     }
 
-    export function stakeAddress(account: MoveAccount, validators: any[]) {
+    export function stakeAddress(account: SuiAccount, validators: any[]) {
       const index = validators.findIndex(
         (validator) =>
           validator.sui_address.toLowerCase() ===
@@ -221,7 +221,7 @@ export namespace Sui {
     }
     export async function startNewRound(
       provider: JsonRpcProvider,
-      account: MoveAccount,
+      account: SuiAccount,
       objectId: string,
       frenemiesPackage: string
     ) {
@@ -242,7 +242,7 @@ export namespace Sui {
 
     export async function stakeAll2(
       provider: JsonRpcProvider,
-      account: MoveAccount,
+      account: SuiAccount,
       validatorAddress: string,
       coins: any[],
       onFail: any
@@ -296,7 +296,7 @@ export namespace Sui {
 
     export async function stakeAll(
       provider: JsonRpcProvider,
-      account: MoveAccount,
+      account: SuiAccount,
       validatorAddress: string,
       onFail: any
     ) {
@@ -349,7 +349,7 @@ export namespace Sui {
 
     export async function unstakeAll(
       provider: JsonRpcProvider,
-      account: MoveAccount
+      account: SuiAccount
     ) {
       const stakedObjects = await getStakePositions(
         provider,
@@ -370,7 +370,7 @@ export namespace Sui {
 
     export function unstake(
       provider: JsonRpcProvider,
-      account: MoveAccount,
+      account: SuiAccount,
       stakeObjectId
     ) {
       const acc2Signer = Sui.Crypto.makeSigner(provider, account);
@@ -386,7 +386,7 @@ export namespace Sui {
 
     export async function stake(
       provider: JsonRpcProvider,
-      account: MoveAccount,
+      account: SuiAccount,
       validatorAddress: string
     ) {
       const signer = Sui.Crypto.makeSigner(provider, account);
@@ -409,7 +409,7 @@ export namespace Sui {
 
     export function setName(
       provider,
-      account: MoveAccount,
+      account: SuiAccount,
       frenemiesPackage,
       nick
     ) {

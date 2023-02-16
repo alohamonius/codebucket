@@ -1,7 +1,7 @@
 import { JsonRpcProvider, RawSigner } from "@mysten/sui.js";
 import BigNumber from "bignumber.js";
 import { Fs } from "../../utils/fs.module";
-import { MoveAccount } from "../MoveAccount";
+import { SuiAccount } from "./SuiAccount";
 import { Sui } from "./sui.module";
 
 const SUI_ADMIN_MNEMONIC = process.env.SUI_ADMIN_MNEMONIC || "";
@@ -63,7 +63,7 @@ export async function init() {
 
 async function tryNewRound(
   provider: JsonRpcProvider,
-  monkey: MoveAccount,
+  monkey: SuiAccount,
   prefix: string
 ) {
   const monkeyObjects = await provider.getObjectsOwnedByAddress(
@@ -110,7 +110,7 @@ async function tryNewRound(
 }
 async function trySignUp(
   provider: JsonRpcProvider,
-  monkey: MoveAccount,
+  monkey: SuiAccount,
   signer: RawSigner,
   prefix: string,
   coinObjectId,
@@ -152,7 +152,7 @@ async function trySignUp(
 async function monkeyJob(
   provider: JsonRpcProvider,
   signer: RawSigner,
-  monkey: MoveAccount,
+  monkey: SuiAccount,
   adminCoinObjectId: string,
   index: number,
   onSuccess: any,
@@ -248,9 +248,9 @@ async function monkeyJob(
 
 async function getPlayers(provider: JsonRpcProvider, count: number = 2) {
   let isWalletsGenerated = await Fs.isFileExistsAsync(PATH);
-  let accounts: MoveAccount[] = [];
+  let accounts: SuiAccount[] = [];
   if (isWalletsGenerated) {
-    accounts = await Fs.loadFileAsync<MoveAccount[]>(PATH);
+    accounts = await Fs.loadFileAsync<SuiAccount[]>(PATH);
   } else {
     accounts = await Sui.Accounts.generateAccounts(provider, count, PATH);
   }

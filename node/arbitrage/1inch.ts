@@ -2,7 +2,7 @@ import OneInchApi, { InchV4Chains } from "@normalizex/1inch-api-v4";
 import BigNumber from "bignumber.js";
 import { ethers } from "ethers";
 import { DEFAULT_DECIMALS } from "../pure/constants";
-import { zeros } from "./common/zeros";
+import { zeros } from "../scanner/common/zeros";
 
 export async function inchQuote(token1, token2, usdValue, chainId: number) {
   const Inch = new OneInchApi(chainId);
