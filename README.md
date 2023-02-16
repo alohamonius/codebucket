@@ -7,4 +7,8 @@ In the 'node' you can see integrations with 3rd parties contracts, apis for work
 SUI Frenemies game in node/bot/sui
 APTOS Quickswap listener node/bot/aptos
 
-EVM Dexes: node/arbitrage ETH: uniswap, sushi, pancake. BSC: sushi, pancake.
+EVM Dexes: node/arbitrage
+
+ETH: [uniswap, sushi, pancake,]
+
+BSC: [sushi, pancake,]
