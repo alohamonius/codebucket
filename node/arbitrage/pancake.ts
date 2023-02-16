@@ -1,6 +1,15 @@
 import { ethers } from "ethers";
-import { SCAN_CONFIG } from "../../pure/constants";
+import { SCAN_CONFIG } from "../pure/constants";
 
+async function uniswap(pk: string) {
+  const provider = new ethers.providers.JsonRpcProvider(
+    "https://rpc.ankr.com/eth/654125c8b0e8e1c5bd46d74e54de8b6cc6444f16f15939b3ca9d8845fcd95985"
+  );
+  //getPairs
+  //for every pair .getReserves
+
+  ("function getReserves() public view returns (uint112 _reserve0, uint112 _reserve1, uint32 _blockTimestampLast)");
+}
 async function pancakeGetAmountsOut(privateKey) {
   const provider = new ethers.providers.JsonRpcProvider(
     "https://rpc.ankr.com/bsc"

@@ -2,6 +2,7 @@ require("dotenv").config();
 const ANKR_WS_BSC_RPC = process.env.ANKR_WS_BSC_RPC || "";
 const ANKR_WS_ETH_RPC = process.env.ANKR_WS_ETH_RPC || "";
 const ANKR_HTTP_BSC_RPC = process.env.ANKR_HTTP_BSC_RPC || "";
+const ANKR_HTTP_ETH_RPC = process.env.ANKR_HTTP_ETH_RPC || "";
 const ANKR_HTTP_APT_RPC = process.env.ANKR_HTTP_APT_RPC || "";
 
 export const DEX_FAMILY = {
@@ -42,7 +43,7 @@ export const SCAN_CONFIG = {
   },
   eth: {
     rpcWs: ANKR_WS_ETH_RPC,
-    rpcHttp: ANKR_HTTP_BSC_RPC,
+    rpcHttp: ANKR_HTTP_ETH_RPC,
 
     uniswapv3: {
       factory: "0x1f98431c8ad98523631ae4a59f267346ea31f984",

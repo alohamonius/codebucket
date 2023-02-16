@@ -3,7 +3,7 @@ import { onNewPairsAdded as onNewPoolAdded } from "./scanner/base/onNewListing";
 import { scanQuotes } from "./jobs/runner";
 import { logQuote } from "./utils/logger";
 import { aptosQuickswap } from "./scanner/aptosQuickSwap";
-import { sui } from "./bot/sui";
+import { init } from "./bot/sui/sui";
 require("dotenv").config();
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
@@ -11,7 +11,7 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
 async function main() {
   // startListetingNewPools();
   // await aptosQuickswap();
-  await sui();
+  await init();
 }
 
 function startListetingNewPools() {

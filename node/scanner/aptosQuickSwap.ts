@@ -38,39 +38,3 @@ export async function aptosQuickswap() {
     "pool_created_handle"
   );
 }
-// event::emit_event(
-//     &mut events_store.pool_created_handle,
-//     PoolCreatedEvent<X, Y, Curve> {
-//         creator: signer::address_of(acc)
-//     },
-// );
-
-// struct PoolCreatedEvent<phantom X, phantom Y, phantom Curve> has drop, store {
-//     creator: address,
-// }
-
-// struct LiquidityAddedEvent<phantom X, phantom Y, phantom Curve> has drop, store {
-//     added_x_val: u64,
-//     added_y_val: u64,
-//     lp_tokens_received: u64,
-// }
-
-// struct LiquidityRemovedEvent<phantom X, phantom Y, phantom Curve> has drop, store {
-//     returned_x_val: u64,
-//     returned_y_val: u64,
-//     lp_tokens_burned: u64,
-// }
-
-// struct SwapEvent<phantom X, phantom Y, phantom Curve> has drop, store {
-//     x_in: u64,
-//     x_out: u64,
-//     y_in: u64,
-//     y_out: u64,
-// }
-
-// struct FlashloanEvent<phantom X, phantom Y, phantom Curve> has drop, store {
-//     x_in: u64,
-//     x_out: u64,
-//     y_in: u64,
-//     y_out: u64,
-// }
