@@ -1,0 +1,45 @@
+ORDER OF LAYOUT.
+1. Pragma
+2. Import
+3. Interfaces
+4. Libraries
+5. Errors
+6. Contract/s
+
+Inside contract:
+- Type declaration
+- State variables
+- Events
+- Modifiers
+- Functions
+    - ctor
+    - receive
+    - fallback
+    - external (view | pure)
+    - public
+    - intenal
+    - private
+
+
+if (x < 10)
+    x += 1;
+
+if (...) {
+    ...
+}
+if (x < 3)
+    x += 1;
+else
+    x -= 1;
+
+
+
+
+Contracts and libraries should be named using the CapWords style.
+Functions should use mixedCase. Examples: getBalance, transfer, verifyOwner, addMember, changeOwner.
+Events should be named using the CapWords style. Examples: Deposit, Transfer, Approval, BeforeTransfer, AfterTransfer.
+
+Function arguments should use mixedCase. Examples: initialSupply, account, recipientAddress, senderAddress, newOwner.
+Constants should be named with all capital letters with underscores separating words. MAX_BLOCKS, TOKEN_NAME
+Modifiers:  onlyBy, onlyAfter, onlyDuringThePreSale.
+Enums: TokenGroup, Frame, HashStyle, CharacterLocation.
