@@ -18,7 +18,7 @@ jobs:
           node-version: "16"
       - name: "Create env file"
         run: |
-          echo "${{ secrets.ENV_DEV }}" > ".env.$CODEBUCKET_ENV"
+          cd solidity && echo "${{ secrets.ENV_DEV }}" > ".env.$CODEBUCKET_ENV"
       - name: Install dependencies
         run: cd solidity && yarn --frozen-lockfile
       - name: Test
