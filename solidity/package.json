@@ -2,7 +2,7 @@
   "license": "MIT",
   "scripts": {
     "prettier-sol": "npx prettier --write 'contracts/**/*.sol'",
-    "dev-test": "SOL_NODE_ENV=dev npx hardhat test"
+    "dev-test": "CODEBUCKET_ENV=dev npx hardhat test"
   },
   "devDependencies": {
     "@chainlink/contracts": "^0.6.0",

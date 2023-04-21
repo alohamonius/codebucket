@@ -1,5 +1,5 @@
-const envFile = process.env.SOL_NODE_ENV
-	? `.env.${process.env.SOL_NODE_ENV}`
+const envFile = process.env.CODEBUCKET_ENV
+	? `.env.${process.env.CODEBUCKET_ENV}`
 	: '.env.example';
 
 require('hardhat-gas-reporter');

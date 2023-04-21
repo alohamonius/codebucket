@@ -9,12 +9,17 @@ on:
 jobs:
   test-contracts:
     runs-on: ubuntu-latest
+    env:
+      CODEBUCKET_ENV: dev
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: "16"
+      - name: "Create env file"
+        run: |
+          echo "${{ secrets.ENV_DEV }}" > ".env.$CODEBUCKET_ENV"
       - name: Install dependencies
         run: cd solidity && yarn --frozen-lockfile
       - name: Test
-        run: cd solidity && npm run dev-test
+        run: cd solidity && npx hardhat test
