@@ -7,8 +7,8 @@ require('dotenv').config({ path: envFile });
 require('hardhat-deploy');
 require('solidity-coverage');
 require('@nomiclabs/hardhat-etherscan');
-// require('@nomiclabs/hardhat-upgrades');
 require('@nomicfoundation/hardhat-chai-matchers');
+// require('@nomiclabs/hardhat-upgrades');
 
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY;
 const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL;
