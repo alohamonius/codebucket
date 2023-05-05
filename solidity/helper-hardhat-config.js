@@ -43,6 +43,9 @@ const networkConfig = {
 		nftmarketplace: {
 			weth: null,
 		},
+		TokenWrapper: {
+			usdc: null,
+		},
 	},
 };
 const developmentChains = ['hardhat', 'localhost'];

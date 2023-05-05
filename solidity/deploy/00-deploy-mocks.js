@@ -12,6 +12,7 @@ module.exports = async (hre) => {
 	const { getNamedAccounts, deployments } = hre;
 	const { deploy, log } = deployments;
 	const { deployer } = await getNamedAccounts();
+	const { owner } = await ethers.getSigners();
 	log('------DEPLOYMENT STARTED----------');
 
 	if (developmentChains.includes(network.name)) {

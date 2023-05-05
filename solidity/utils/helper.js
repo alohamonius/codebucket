@@ -46,6 +46,10 @@ function getOwners(contract, tokenIds) {
 	);
 }
 
+function addPercents(number, percents) {
+	return BigNumber(number).times(percents);
+}
+
 function toSeconds(value, unit) {
 	let duration;
 
@@ -84,4 +88,5 @@ module.exports = {
 	gasCost: gasCost,
 	networkDelay: networkDelay,
 	formatText: formatText,
+	addPercents: addPercents,
 };

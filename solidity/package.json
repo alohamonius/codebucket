@@ -32,5 +32,8 @@
     "solidity-coverage": "^0.8.0",
     "typechain": "^8.1.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@uniswap/v2-periphery": "^1.1.0-beta.0",
+    "solc": "^0.8.19"
+  }
 }
