@@ -54,7 +54,7 @@ contract TokenWrapper is ERC721, Ownable, ReentrancyGuard {
         emit TokensRemoved(tokens);
     }   
 
-    function withdraw() external onlyOwner {//reenter
+    function withdraw() external onlyOwner nonReentrant{
         uint256[] memory tokenIds = getAllTokenIds();
         uint256 sum = 0;
 
