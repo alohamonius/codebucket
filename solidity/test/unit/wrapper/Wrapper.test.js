@@ -45,8 +45,7 @@ const ERC20ABI = require('@uniswap/v2-core/build/ERC20.json').abi;
 				);
 				const balance = await SOME_ERC20.balanceOf(vitalikAddress);
 
-				await contractErc20
-					.connect(impersonateSigner)
+				await SOME_ERC20.connect(impersonateSigner)
 					.transfer(
 						signerWithUsdt.address,
 						balance.div(50).toString(),

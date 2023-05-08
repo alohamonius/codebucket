@@ -1,0 +1,22 @@
+{
+  pools(
+    where: {
+      token0Price_gt: 0.0001
+      token1Price_gt: 0.0001
+      volumeUSD_gt: 10000
+    }
+  ) {
+    id
+    token0 {
+      symbol
+      name
+    }
+    token1 {
+      symbol
+      name
+    }
+    token0Price
+    token1Price
+    volumeUSD
+  }
+}

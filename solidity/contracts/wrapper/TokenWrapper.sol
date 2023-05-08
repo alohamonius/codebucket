@@ -11,6 +11,10 @@ import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "hardhat/console.sol";
 
+/**
+ * @title Wrap many ERC20 to ERC721
+ * @author alohamonius
+ */
 contract TokenWrapper is ERC721, Ownable, ReentrancyGuard {
     using SafeMath for uint256;
     using Counters for Counters.Counter;
@@ -19,17 +23,16 @@ contract TokenWrapper is ERC721, Ownable, ReentrancyGuard {
         address tokenAddress;
         uint256 amount;
     }
-
-    mapping(uint256 => TokenData[]) private _wrappedTokens;
-    mapping(address => bool) private _allowedTokens;
-
-
-    Counters.Counter private _tokenIdCounter;
-    uint256[] private _allTokens;
+   
     uint256 public constant PROTOCOL_FEE_PERCENTAGE = 5;
     address public constant UNISWAP_ROUTER_ADDRESS = 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D;
     address public constant USDC_ADDRESS = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
+
     IUniswapV2Router02 private uniswapRouter;
+    mapping(uint256 => TokenData[]) private _wrappedTokens;
+    mapping(address => bool) private _allowedTokens;
+    Counters.Counter private _tokenIdCounter;
+    uint256[] private _allTokens;
 
     event TokensAdded(address[] tokens);
     event TokensRemoved(address[] tokens);
@@ -55,29 +58,23 @@ contract TokenWrapper is ERC721, Ownable, ReentrancyGuard {
     }   
 
     function withdraw() external onlyOwner nonReentrant{
-        uint256[] memory tokenIds = getAllTokenIds();
-        uint256 sum = 0;
-
-        for(uint256 i=0;i<tokenIds.length;i++){
-            uint256 tokenId = tokenIds[i];
+        for(uint256 i=0;i<_allTokens.length;i++){
+            uint256 tokenId = _allTokens[i];
             TokenData[] memory tokenData = _wrappedTokens[tokenId];
 
             for(uint256 j=0;j<tokenData.length;j++){
                 address[] memory path = new address[](2);
                 IERC20 token = IERC20(tokenData[j].tokenAddress);
-                console.log(tokenData[j].tokenAddress,tokenData[j].amount);
                 uint256 amount = tokenData[j].amount;
                 require(token.approve(address(uniswapRouter), amount),'approve failed');
 
                 path[0]=tokenData[j].tokenAddress;
                 path[1]=USDC_ADDRESS;
-                console.log('swap',amount);
                 uint256[] memory amountsExpected = uniswapRouter.getAmountsOut(
-                            amount,//??
+                            amount,
                             path
                 );
 
-                console.log('amounts',amountsExpected[0],amountsExpected[1]);
                 uint256[] memory amounts =
                 uniswapRouter.swapExactTokensForTokens(
                     amountsExpected[0],
@@ -87,14 +84,28 @@ contract TokenWrapper is ERC721, Ownable, ReentrancyGuard {
                     block.timestamp+300);
             }
             delete _wrappedTokens[tokenId];
+            removeItem(_allTokens, i);
         }
         IERC20 usdc = IERC20(USDC_ADDRESS);
         uint256 balance = usdc.balanceOf(address(this));
         require(usdc.transfer(msg.sender, balance), "USDC transfer failed");
     }
 
-    function getAllTokenIds() public view returns (uint256[] memory) {
-        return _allTokens;
+    function burn(uint256 tokenId) public {
+        TokenData[] storage tokens = _wrappedTokens[tokenId];
+        require(tokens.length > 0, "MyNFT: no wrapped tokens");
+        require(ownerOf(tokenId) == msg.sender,"not you nft");
+
+        for (uint256 i = 0; i < tokens.length; i++) {
+            IERC20 token = IERC20(tokens[i].tokenAddress);
+            uint256 amount = tokens[i].amount.mul(995).div(1000); // 99.5% of wrapped token amount
+            console.log(amount);
+            require(token.transfer(msg.sender, amount), "MyNFT: token transfer failed");
+            tokens[i].amount = tokens[i].amount.sub(amount);
+        }
+
+        _burn(tokenId);
+        emit NFTBurned(msg.sender, tokenId);
     }
 
     function wrap(TokenData[] memory tokens) payable external {
@@ -121,22 +132,10 @@ contract TokenWrapper is ERC721, Ownable, ReentrancyGuard {
         _allTokens.push(tokenId);
         _tokenIdCounter.increment();
     }
-
-    function burn(uint256 tokenId) public {
-        TokenData[] storage tokens = _wrappedTokens[tokenId];
-        require(tokens.length > 0, "MyNFT: no wrapped tokens");
-
-        for (uint256 i = 0; i < tokens.length; i++) {
-            IERC20 token = IERC20(tokens[i].tokenAddress);
-            uint256 amount = tokens[i].amount.mul(995).div(1000); // 99.5% of wrapped token amount
-            console.log(amount);
-            require(token.transfer(msg.sender, amount), "MyNFT: token transfer failed");
-            tokens[i].amount = tokens[i].amount.sub(amount);
-        }
-
-        _burn(tokenId);
-        emit NFTBurned(msg.sender, tokenId);
-    }
-
    
+    function removeItem(uint256[] storage array, uint index) internal {
+        require(index < array.length);
+        array[index] = array[array.length-1];
+        array.pop();
+    }
 }

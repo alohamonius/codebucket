@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 import { DEX_FAMILY, SCAN_CONFIG } from "../pure/constants";
 import { keepAlive } from "../utils/keepAlive";
 
-export function onNewPairsAdded(
+export function onNewListing(
   privateKey,
   chain: string,
   exchange: string,
@@ -10,11 +10,10 @@ export function onNewPairsAdded(
 ) {
   const rpcWsUrl = SCAN_CONFIG[chain].rpcWs;
   const provider = new ethers.providers.WebSocketProvider(rpcWsUrl);
-
   keepAlive({
     provider,
     onDisconnect: (err) => {
-      onNewPairsAdded(privateKey, chain, exchange, onNewListing);
+      onNewListing(privateKey, chain, exchange, onNewListing);
       console.error(
         "The ws connection was closed",
         JSON.stringify(err, null, 2)
