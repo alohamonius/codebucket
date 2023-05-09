@@ -1,11 +1,11 @@
 const { assert, expect } = require('chai');
 const BigNumber = require('bignumber.js');
 BigNumber.config({ DECIMAL_PLACES: 19 });
-const { toSeconds, getEvent, callAndWait } = require('../../../utils/helper');
+const { toSeconds, getEvent, callAndWait } = require('../../utils/helper');
 const {
 	developmentChains,
 	networkConfig,
-} = require('../../../helper-hardhat-config.js');
+} = require('../../helper-hardhat-config.js');
 const { ethers } = require('hardhat');
 
 const ERC20ABI = require('@uniswap/v2-core/build/ERC20.json').abi;

@@ -20,11 +20,15 @@ module.exports = {
 	networks: {
 		hardhat: {
 			chainId: 31337,
-			// gasPrice: 130000000000,
+		},
+		fork: {
+			url: 'https://eth-mainnet.public.blastapi.io',
+			chainId: 31339,
 			forking: {
 				url: 'https://eth-mainnet.public.blastapi.io',
 				blockNumber: 17192000,
 			},
+			blockConfirmations: 1,
 		},
 
 		goerli: {
@@ -59,5 +63,8 @@ module.exports = {
 		player: {
 			default: 1,
 		},
+	},
+	paths: {
+		tests: './test/unit', //TODO: IDK what to do with TokenWrapper to run on fork network.
 	},
 };

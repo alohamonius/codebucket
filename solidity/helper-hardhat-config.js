@@ -47,6 +47,12 @@ const networkConfig = {
 			usdc: null,
 		},
 	},
+	31339: {
+		name: 'fork',
+		TokenWrapper: {
+			usdc: null,
+		},
+	},
 };
 const developmentChains = ['hardhat', 'localhost'];
 const DECIMALS = 8;

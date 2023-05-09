@@ -5,7 +5,7 @@ const {
 } = require('../helper-hardhat-config');
 const { formatText } = require('../utils/helper');
 
-const DEPLOY_NAME = 'WRAPPER';
+const DEPLOY_NAME = 'NFT-MARKETPLACE';
 
 module.exports = async (hre) => {
 	const { getNamedAccounts, deployments } = hre;
@@ -16,15 +16,14 @@ module.exports = async (hre) => {
 	if (developmentChains.includes(network.name)) {
 		[owner, addr1, addr2, addr3, addr4] = await ethers.getSigners();
 
-		const market = await deploy('TokenWrapper', {
-			contract: 'TokenWrapper',
+		const market = await deploy('VerifySignature', {
+			contract: 'VerifySignature',
 			from: deployer,
 			log: true,
-			args: ['nft20', 'nft20'],
+			args: [],
 		});
 	} else {
-		throw 'not implemented';
 	}
 };
 
-module.exports.tags = ['all', 'wrapper'];
+module.exports.tags = ['all', 'VerifySignature'];
