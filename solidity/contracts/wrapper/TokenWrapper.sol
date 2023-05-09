@@ -128,7 +128,7 @@ contract TokenWrapper is ERC721, Ownable, ReentrancyGuard {
 
     function wrap(TokenData[] memory _tokens) external payable {
         require(
-            _tokens.length > 0 && tokens.length <= 3,
+            _tokens.length > 0 && _tokens.length <= 3,
             "MyNFT: at least one token required"
         );
 
@@ -162,14 +162,14 @@ contract TokenWrapper is ERC721, Ownable, ReentrancyGuard {
         }
 
         _safeMint(msg.sender, tokenId);
-        emit NFTMinted(msg.sender, tokenId, tokens);
+        emit NFTMinted(msg.sender, tokenId, _tokens);
         _allTokens.push(tokenId);
         _tokenIdCounter.increment();
     }
 
     function removeItem(uint256[] storage _array, uint256 _index) internal {
         require(_index < _array.length);
-        _array[index] = _array[_array.length - 1];
+        _array[_index] = _array[_array.length - 1];
         _array.pop();
     }
 }
