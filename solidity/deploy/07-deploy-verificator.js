@@ -5,7 +5,7 @@ const {
 } = require('../helper-hardhat-config');
 const { formatText } = require('../utils/helper');
 
-const DEPLOY_NAME = 'NFT-MARKETPLACE';
+const DEPLOY_NAME = 'VerifySignature';
 
 module.exports = async (hre) => {
 	const { getNamedAccounts, deployments } = hre;

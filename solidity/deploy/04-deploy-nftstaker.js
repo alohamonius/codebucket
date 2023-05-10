@@ -35,7 +35,12 @@ module.exports = async (hre) => {
 			contract: 'Staker',
 			from: deployer,
 			log: true,
-			args: [minter.address, rewards.address, rewardsPeriod, rewardsPerPeriod],
+			args: [
+				minter.address,
+				rewards.address,
+				rewardsPeriod,
+				rewardsPerPeriod,
+			],
 		});
 		const rewardToken = await ethers.getContract('ERC20Rewards', deployer);
 		await rewardToken.addController(staker.address);

@@ -126,7 +126,7 @@ contract TokenWrapper is ERC721, Ownable, ReentrancyGuard {
         emit NFTBurned(msg.sender, _tokenId);
     }
 
-    function wrap(TokenData[] memory _tokens) external payable {
+    function wrap(TokenData[] calldata _tokens) external payable {
         require(
             _tokens.length > 0 && _tokens.length <= 3,
             "MyNFT: at least one token required"

@@ -8,12 +8,14 @@ require('hardhat-deploy');
 require('solidity-coverage');
 require('@nomiclabs/hardhat-etherscan');
 require('@nomicfoundation/hardhat-chai-matchers');
-// require('@nomiclabs/hardhat-upgrades');
+require('@openzeppelin/hardhat-upgrades');
 
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY;
 const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL;
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
+const MATIC_RPC_URL = process.env.MATIC_RPC_URL;
+const MATIC_DEPLOYER = process.env.MATIC_DEPLOYER;
 
 module.exports = {
 	defaultNetwork: 'hardhat',
@@ -29,6 +31,12 @@ module.exports = {
 				blockNumber: 17192000,
 			},
 			blockConfirmations: 1,
+		},
+		matic: {
+			url: MATIC_RPC_URL,
+			accounts: [MATIC_DEPLOYER],
+			chainId: 137,
+			blockConfirmations: 6,
 		},
 
 		goerli: {
