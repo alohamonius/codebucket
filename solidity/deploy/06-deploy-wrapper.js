@@ -2,6 +2,7 @@ const { network, ethers } = require('hardhat');
 const {
 	developmentChains,
 	networkConfig,
+	forkChains,
 } = require('../helper-hardhat-config');
 const { formatText } = require('../utils/helper');
 
@@ -13,7 +14,10 @@ module.exports = async (hre) => {
 	const { deployer } = await getNamedAccounts();
 	log(formatText(DEPLOY_NAME + ' STARTED'));
 
-	if (developmentChains.includes(network.name)) {
+	if (
+		developmentChains.includes(network.name) ||
+		forkChains.includes(network.name)
+	) {
 		await deploy('TokenWrapper', {
 			contract: 'TokenWrapper',
 			from: deployer,

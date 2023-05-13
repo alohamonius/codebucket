@@ -48,13 +48,14 @@ const networkConfig = {
 		},
 	},
 	31339: {
-		name: 'fork',
+		name: 'forkETH',
 		TokenWrapper: {
 			usdc: null,
 		},
 	},
 };
 const developmentChains = ['hardhat', 'localhost'];
+const forkChains = ['forkETH'];
 const DECIMALS = 8;
 const INITIAL_AMSWER = 1470000000000;
 
@@ -63,4 +64,5 @@ module.exports = {
 	developmentChains,
 	DECIMALS,
 	INITIAL_AMSWER,
+	forkChains,
 };

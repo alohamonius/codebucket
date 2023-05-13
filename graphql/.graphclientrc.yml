@@ -1,11 +1,20 @@
 sources:
+  - name: uniswap3
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3
+    transforms:
+      - autoPagination: {}
   - name: uniswapv2
     handler:
       graphql:
         endpoint: https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2
     transforms:
-      - autoPagination:
-          # You might want to disable schema validation for faster startup
-          validateSchema: true
+      - autoPagination: {}
+
+plugins:
+  - pollingLive:
+      defaultInterval: 1000
 documents:
+  - ./graphql/GetPoolsLive.gql
   - ./graphql/GetPools.gql

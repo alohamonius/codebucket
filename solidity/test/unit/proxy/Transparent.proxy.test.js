@@ -7,7 +7,6 @@ describe('Proxy', async () => {
 	beforeEach(async () => {
 		proxyV1 = await ethers.getContractFactory('ProxyTestV1');
 		proxyV2 = await ethers.getContractFactory('ProxyTestV2');
-		//ProxyTestV1,ProxyTestV2
 		ProxyV1 = await upgrades.deployProxy(proxyV1, [], {
 			initializer: false,
 		});
@@ -23,11 +22,17 @@ describe('Proxy', async () => {
 
 		const lastValueV1 = await ProxyV1.getLastCalculatedSquare();
 
+		const implementationV1 =
+			await upgrades.erc1967.getImplementationAddress(ProxyV1.address);
+
 		ProxyV2 = await upgrades.upgradeProxy(ProxyV1.address, proxyV2);
+		const implementationV2 =
+			await upgrades.erc1967.getImplementationAddress(ProxyV2.address);
 		const lastValueV2 = await ProxyV2.getLastCalculatedSquare();
 
 		assert.isTrue(lastValueV2.eq(lastValueV1));
 		assert.isTrue(lastValueV1.eq(valueV1));
 		assert.equal(ProxyV2.address, ProxyV1.address);
+		assert.notEqual(implementationV1, implementationV2);
 	});
 });

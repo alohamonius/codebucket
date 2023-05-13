@@ -1,12 +1,13 @@
 {
   "devDependencies": {
     "@graphprotocol/client-cli": "^2.2.21",
+    "@graphprotocol/client-polling-live": "1.1.1",
     "@types/node": "^18.16.0",
     "typescript": "^5.0.4",
-    "@graphprotocol/client-polling-live": "1.1.1",
     "graphql": "16.6.0"
   },
   "scripts": {
+    "start": "ts-node main.ts",
     "codegen": "graphclient build",
     "dev": "graphclient serve-dev"
   },

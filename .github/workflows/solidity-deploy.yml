@@ -20,6 +20,6 @@ jobs:
         run: |
           cd solidity && echo "${{ secrets.ENV_DEV }}" > ".env.$CODEBUCKET_ENV"
       - name: Install dependencies
-        run: cd solidity && yarn --frozen-lockfile
+        run: cd solidity && yarn install
       - name: Test
         run: cd solidity && npx hardhat test
