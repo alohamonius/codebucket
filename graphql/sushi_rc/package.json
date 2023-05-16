@@ -8,10 +8,11 @@
   },
   "scripts": {
     "start": "ts-node main.ts",
-    "codegen": "ts-node ./scripts/cicd.ts",
+    "codegen": "graphclient build",
     "dev": "graphclient serve-dev"
   },
   "dependencies": {
+    "@graphql-mesh/transform-rename": "^0.93.1",
     "ts-node": "^10.9.1"
   }
 }

@@ -1,20 +1,21 @@
 sources:
-  - name: uniswap3
+  - name: sushi3
     handler:
       graphql:
         endpoint: https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3
+        retry: 5
     transforms:
       - autoPagination: {}
-  - name: uniswapv2
+  - name: sushi2
     handler:
       graphql:
         endpoint: https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2
+        retry: 5
     transforms:
       - autoPagination: {}
-
 plugins:
   - pollingLive:
-      defaultInterval: 1000
+      defaultInterval: 4000
 documents:
-  - ./graphql/GetPoolsLive.gql
-  - ./graphql/GetPools.gql
+  - ./graphql/GetPoolsUniswap.gql
+  - ./graphql/GetPoolsUniswapLive.gql

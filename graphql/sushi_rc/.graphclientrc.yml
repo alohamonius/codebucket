@@ -1,0 +1,21 @@
+sources:
+  - name: sushi3
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/sushi-v3/v3-ethereum
+        retry: 5
+    transforms:
+      - autoPagination: {}
+  - name: sushi2
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/sushiswap/exchange
+        retry: 5
+    transforms:
+      - autoPagination: {}
+plugins:
+  - pollingLive:
+      defaultInterval: 4000
+documents:
+  - ./graphql/GetPoolsSushi.gql
+  - ./graphql/GetPoolsSushiLive.gql

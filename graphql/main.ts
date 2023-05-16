@@ -1,57 +1,104 @@
-import { PairFilter } from "./PairFilter";
 import {
-  GetPoolsDocument,
-  GetPoolsLiveDocument,
-  getBuiltGraphSDK,
-} from "./.graphclient";
-import { getMesh, GetMeshOptions, MeshInstance } from "@graphql-mesh/runtime";
+  GetPoolsSushiDocument,
+  GetPoolsSushiLiveDocument,
+} from "./sushi_rc/.graphclient";
+import {
+  GetPoolsUniswapDocument,
+  GetPoolsUniswapLiveDocument,
+  GetPoolsUniswapLiveQuery,
+} from "./uniswap_rc/.graphclient";
+import { getMesh } from "@graphql-mesh/runtime";
 import { findAndParseConfig } from "@graphql-mesh/cli";
 import { join } from "path";
+import { findCommonKeys, mapData, subscribe } from "./utils/utils";
 
-async function main() {
+async function graphInit(dex: string) {
   const config = await findAndParseConfig({
-    dir: join(__dirname, "../graphql"),
+    dir: join(__dirname, "./" + dex + "_rc"),
     configName: "graphclient",
     additionalPackagePrefixes: ["@graphprotocol/client-"],
   });
-  const mesh = await getMesh(config);
-  const result = await mesh.execute(GetPoolsDocument, {
-    first: 100,
-    skip: 0,
-  });
-  // якщо уявити собі що юнісвап(в3) буде джерело першим
-  //потім будемо бігати по cyber, sushi, univ2?
-  //відштовхуючись від ціни графа, я пробігаюсь по всім парам в cyber/sushi і вишукую різницю.
-  const { pools, pairs } = result.data;
-
-  let poolToData = {
-    v3: {},
-    v2: {},
-  };
-
-  pools.forEach((element) => {
-    poolToData["v3"][keyV3(element)] = {
-      left: element.token0.id,
-      right: element.token1.id,
-      price: [element.token0Price, element.token1Price],
-    };
-    debugger;
-  });
+  return getMesh(config);
 }
 
-async function subscribe(mesh: MeshInstance, onNewData: any) {
-  const repeater = await mesh.subscribe(
-    GetPoolsLiveDocument,
-    { first: 1, skip: 0, containsId: [] },
-    {},
-    "GetPools"
-  );
-  for await (let x of repeater[Symbol.asyncIterator]()) {
-    onNewData(x.data);
-  }
+//https://thegraph.com/hosted-service/subgraph/sushi-v3/v3-ethereum
+//https://thegraph.com/hosted-service/subgraph/sushi-v3/v3-bsc
+//https://thegraph.com/hosted-service/subgraph/sushi-v3/v3-polygon
+
+//v2
+//https://thegraph.com/hosted-service/subgraph/sushiswap/bsc-exchange
+//https://thegraph.com/hosted-service/subgraph/sushiswap/exchange (eth)
+//https://thegraph.com/hosted-service/subgraph/sushiswap/matic-exchange
+
+//я хочу робити квері і отримувати ціни з sushi3,uni3 + sushi2,uni2 + suhi,uni
+//в ідеалі з можливістю робити кросчейн (матік, бсц, ефір)
+//хоча я ще не знайшов бсц і матік ендпоінт для юні
+
+//ну от, є в мене список цін на дексах (1,2) лише двох.
+
+async function main() {
+  const meshSushi = await graphInit("sushi");
+  const meshUniswap = await graphInit("uniswap");
+
+  // const result2 = await meshSushi.execute(GetPoolsSushiDocument, {
+  //   first: 100,
+  //   skip: 0,
+  //   totalLocked: 5000,
+  // });
+
+  // const result = await meshUniswap.execute(GetPoolsUniswapDocument, {
+  //   first: 100,
+  //   skip: 0,
+  //   totalLocked: 10000,
+  // });
+
+  await Promise.all([
+    subscribe(
+      meshSushi,
+      GetPoolsSushiLiveDocument,
+      {
+        first: 1,
+        skip: 0,
+        totalLocked: 5000,
+      },
+      (data) => {
+        console.log("sushi", "v3", data.pools.length, "v2", data.pairs.length);
+      }
+    ),
+    subscribe(
+      meshUniswap,
+      GetPoolsUniswapLiveDocument,
+      {
+        first: 1,
+        skip: 0,
+        totalLocked: 5000,
+      },
+      (data) => {
+        console.log(
+          "uniswap",
+          "v3",
+          data.pools.length,
+          "v2",
+          data.pairs.length
+        );
+      }
+    ),
+  ]);
+  debugger;
+  // debugger;
+
+  // const { pools, pairs } = result.data;
+
+  // const uniswapV3 = mapData(pools, "univ3");
+  // const uniswapV2 = mapData(pairs, "univ2");
+
+  // const commonKeys = findCommonKeys(uniswapV2, uniswapV3);
+
+  // commonKeys.forEach((key) => {
+  //   const x = uniswapV2[key];
+  //   const y = uniswapV3[key];
+  //   debugger;
+  // });
 }
 
-function keyV3(element: any) {
-  return `${element.id}_${element.token0.symbol}/${element.token1.symbol}`;
-}
 main();

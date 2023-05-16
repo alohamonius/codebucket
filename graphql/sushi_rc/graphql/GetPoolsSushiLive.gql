@@ -1,6 +1,5 @@
-query GetPoolsLive($first: Int = 100, $skip: Int = 0, $containsId: [Int])
+query GetPoolsSushiLive($first: Int = 100, $skip: Int = 0, $containsId: [Int])
 @live {
-  # this one is coming from compound-v3
   pools(
     first: $first
     skip: $skip
@@ -29,7 +28,6 @@ query GetPoolsLive($first: Int = 100, $skip: Int = 0, $containsId: [Int])
     volumeUSD
   }
 
-  # this one is coming from compound-v2
   pairs(first: $first, skip: $skip, orderBy: volumeUSD, orderDirection: desc) {
     id
     token0 {

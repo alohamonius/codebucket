@@ -1,0 +1,44 @@
+query GetPoolsUniswapLive($first: Int = 100, $skip: Int = 0, $containsId: [Int])
+@live {
+  pools(
+    first: $first
+    skip: $skip
+    orderBy: volumeUSD
+    orderDirection: desc
+    where: { totalValueLockedUSD_gt: 10000 }
+  ) {
+    id
+    token0 {
+      id
+      symbol
+      name
+    }
+    token1 {
+      id
+      symbol
+      name
+    }
+    poolDayData(first: 1, orderBy: date, orderDirection: desc) {
+      id
+      volumeUSD
+      date
+    }
+    token0Price
+    token1Price
+    volumeUSD
+  }
+
+  pairs(first: $first, skip: $skip, orderBy: volumeUSD, orderDirection: desc) {
+    id
+    token0 {
+      id
+      name
+    }
+    token1 {
+      id
+      name
+    }
+    token0Price
+    token1Price
+  }
+}
