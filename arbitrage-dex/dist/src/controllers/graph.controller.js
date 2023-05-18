@@ -12,19 +12,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const DexPairsRepository_1 = require("../graph/DexPairsRepository");
 const tsyringe_1 = require("tsyringe");
+const express_validator_1 = require("express-validator");
 let GraphController = class GraphController {
     constructor(repository_) {
         this.route = "/graph";
         this.router = (0, express_1.Router)();
-        this.router.get("/", this.getData);
+        this.router.post("/", (0, express_validator_1.body)("pairs").exists().withMessage("required"), this.post);
         this._repository = repository_;
     }
-    getData(request, response, next) {
-        throw new Error("Method not implemented.");
+    post(request, response, next) {
+        const result = (0, express_validator_1.validationResult)(request);
+        if (!result.isEmpty())
+            return response.send(result.array());
+        const tokenIds = request.body;
+        const data = this._repository.get(tokenIds.pairs);
+        response.send(data);
     }
 };
 GraphController = __decorate([
-    (0, tsyringe_1.autoInjectable)(),
+    (0, tsyringe_1.autoInjectable)()
+    // @scoped(Lifecycle.ResolutionScoped)
+    ,
     __metadata("design:paramtypes", [DexPairsRepository_1.DexPairsRepository])
 ], GraphController);
 exports.default = GraphController;

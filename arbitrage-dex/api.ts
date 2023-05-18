@@ -1,16 +1,14 @@
 import express, {
-  ErrorRequestHandler,
   Express,
+  NextFunction,
   Request,
   Response,
   Router,
 } from "express";
 import "reflect-metadata";
-import * as compression from "compression";
-import { json, urlencoded } from "body-parser";
-import { Api } from "./src/utils/ApiHelper";
-import { AppLogger } from "./app.logger";
-import { AppRouting } from "./api.routing";
+import { AppLogger } from "./src/utils/App.logger";
+import { container } from "tsyringe";
+import GraphController from "./src/controllers/Graph.controller";
 
 export default class ExpressApi {
   public app: Express;
@@ -27,32 +25,31 @@ export default class ExpressApi {
 
   private configure() {
     this.configureMiddleware();
+    this.configureRoutes();
     this.errorHandler();
-    new AppRouting(this.router);
+  }
+  private configureRoutes() {
+    const graphController = container.resolve(GraphController);
+    this.app.use(graphController.route, graphController.router);
   }
 
   private configureMiddleware() {
-    this.app.use(json({ limit: "50mb" }));
-    // this.app.use(compression());
-    this.app.use(urlencoded({ limit: "50mb", extended: true }));
+    this.app.use(express.json({ limit: "50mb" }));
+    this.app.use(express.urlencoded({ limit: "50mb", extended: true }));
   }
 
-  public addRoute(route: string, router: Router) {
-    this.app.use(route, router);
-  }
   private errorHandler() {
-    this.app.use(
-      (error: ErrorRequestHandler, request: Request, res: Response) => {
-        if (request.body) {
-          AppLogger.error("Payload", JSON.stringify(request.body));
-        }
-        AppLogger.error("Error", error);
-        Api.serverError(request, res, error);
-      }
-    );
-
-    this.app.use((request, res) => {
-      Api.notFound(request, res);
-    });
+    this.app.use(errorHandler);
   }
 }
+
+const errorHandler = (
+  err: Error,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  AppLogger.error(err.message);
+
+  return res.status(500).json({ error: "Internal server error" });
+};

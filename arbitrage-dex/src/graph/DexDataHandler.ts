@@ -1,5 +1,11 @@
 import { singleton } from "tsyringe";
-import { distinct, getPairIds, pairToPools, toDictinary } from "../utils/utils";
+import {
+  distinct,
+  distinctKey,
+  getPairIds,
+  pairToPools,
+  toDictinary,
+} from "../utils/utils";
 import { Pair, PoolInfo } from "./types";
 import { Fs } from "../utils/fs.module";
 import { DexPairsRepository } from "./DexPairsRepository";
@@ -21,11 +27,12 @@ export class DexDataHandler {
   }
   public async handle(exchangeName: string, data: UniswapFamilyDexGraphData) {
     if ("v2" in data && "v3" in data) {
-      const datav2 = toDictinary(data.v2, exchangeName + "v2");
-      const datav3 = toDictinary(data.v3, exchangeName + "v3");
-
-      const allPairsV2: string[] = getPairIds(data.v2);
-      const allPairsV3: string[] = getPairIds(data.v3);
+      const v2Distincted = distinctKey<Pair>(data.v2, "id");
+      const v3Distincted = distinctKey<Pair>(data.v3, "id");
+      const datav2 = toDictinary(v2Distincted, exchangeName + "v2");
+      const datav3 = toDictinary(v3Distincted, exchangeName + "v3");
+      const allPairsV2: string[] = getPairIds(v2Distincted);
+      const allPairsV3: string[] = getPairIds(v3Distincted);
       //TODO: For now only t0_t1, but maybe need also check t1_t0 ?
 
       this.uniquePairs = distinct(allPairsV2, allPairsV3, this.uniquePairs);
@@ -47,6 +54,12 @@ export class DexDataHandler {
     );
     const entries = Array.from(this._db.entries());
     this.pairsToPools = pairToPools(entries, this.uniquePairs);
+    debugger;
     this._storage.init(this.pairsToPools);
+
+    const e = await Fs.writeAsync(
+      "./pairsToPools.json",
+      Array.from(this.pairsToPools.entries())
+    );
   }
 }

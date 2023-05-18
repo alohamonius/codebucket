@@ -31,6 +31,7 @@ let DexPairsRepository = class DexPairsRepository {
     }
 };
 DexPairsRepository = __decorate([
-    (0, tsyringe_1.singleton)()
+    (0, tsyringe_1.singleton)(),
+    (0, tsyringe_1.injectable)()
 ], DexPairsRepository);
 exports.DexPairsRepository = DexPairsRepository;

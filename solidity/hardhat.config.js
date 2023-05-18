@@ -22,10 +22,7 @@ module.exports = {
 	networks: {
 		hardhat: {
 			chainId: 31337,
-			forking: {
-				url: 'https://eth-mainnet.public.blastapi.io',
-				blockNumber: 17192000,
-			},
+			url: 'https://eth-mainnet.public.blastapi.io',
 		},
 		forkETH: {
 			url: 'https://eth-mainnet.public.blastapi.io',

@@ -1,7 +1,8 @@
-import { singleton } from "tsyringe";
+import { injectable, singleton } from "tsyringe";
 import { PoolInfo } from "./types";
 
 @singleton()
+// @injectable()
 export class DexPairsRepository {
   public pairsToPools = new Map<string, PoolInfo[]>();
 
@@ -20,10 +21,5 @@ export class DexPairsRepository {
 
   public init(data: Map<string, PoolInfo[]>) {
     this.pairsToPools = data;
-
-    // const e = await Fs.writeAsync(
-    //   "./pairsToPools.json",
-    //   Array.from(pairsToPools.entries())
-    // );
   }
 }

@@ -6,18 +6,19 @@ export function pairToPools(
 ): Map<string, PoolInfo[]> {
   let pairToPools: Map<string, PoolInfo[]> = new Map<string, PoolInfo[]>();
   for (let i = 0; i < uniquePairs.length; i++) {
-    const pair = uniquePairs[i];
+    const pairId = uniquePairs[i];
+
     for (let j = 0; j < objects.length; j++) {
       const dexName = objects[j][0];
       const currentDexMap = objects[j][1];
 
-      if (currentDexMap.has(pair)) {
-        const pairData = currentDexMap.get(pair);
-        if (pairToPools.has(pair)) {
-          const poolData = pairToPools.get(pair);
-          pairToPools.set(pair, poolData.concat(pairData));
+      if (currentDexMap.has(pairId)) {
+        const pairData = currentDexMap.get(pairId);
+        if (pairToPools.has(pairId)) {
+          const poolData = pairToPools.get(pairId);
+          pairToPools.set(pairId, distinct(poolData.concat(pairData)));
         } else {
-          pairToPools.set(pair, pairData);
+          pairToPools.set(pairId, pairData);
         }
       }
     }
@@ -55,6 +56,14 @@ function toKey(element: Pair) {
 export function distinct(...arrays): any[] {
   const combinedArray = [].concat(...arrays);
   return [...new Set(combinedArray)];
+}
+
+export function distinctKey<T>(array: T[], key: keyof T): T[] {
+  const map = new Map<T[keyof T], T>();
+  for (const item of array) {
+    map.set(item[key], item);
+  }
+  return Array.from(map.values());
 }
 
 export function getPairIds(pairs: Pair[]): string[] {

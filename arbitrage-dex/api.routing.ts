@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { container } from "tsyringe";
-import GraphController from "./src/controllers/graph.controller";
+import GraphController from "./src/controllers/Graph.controller";
 import AppRoute from "./src/controllers/AppRoute";
 
 export class AppRouting {
