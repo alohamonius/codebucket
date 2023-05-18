@@ -1,0 +1,50 @@
+query GetPoolsUniswap(
+  $first: Int = 100
+  $skip: Int = 0
+  $totalLocked: BigDecimal = 100
+) {
+  v3: pools(
+    first: $first
+    skip: $skip
+    orderBy: volumeUSD
+    orderDirection: desc
+    where: { totalValueLockedUSD_gt: $totalLocked }
+  ) {
+    id
+    token0 {
+      id
+      symbol
+      decimals
+    }
+    token1 {
+      id
+      symbol
+      decimals
+    }
+    token0Price
+    token1Price
+    volumeUSD
+    feeTier
+  }
+
+  v2: pairs(
+    first: $first
+    skip: $skip
+    orderBy: volumeUSD
+    orderDirection: desc
+  ) {
+    id
+    token0 {
+      id
+      symbol
+      decimals
+    }
+    token1 {
+      id
+      symbol
+      decimals
+    }
+    token0Price
+    token1Price
+  }
+}

@@ -1,0 +1,92 @@
+[
+  {
+    "id": "0x397ff1542f962076d0bfe58ea045ffa2d347aca0",
+    "token0": {
+      "id": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+      "symbol": "USDC",
+      "decimals": "6"
+    },
+    "token1": {
+      "id": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "symbol": "WETH",
+      "decimals": "18"
+    },
+    "token0Price": "1826.613667924969987992835796195605",
+    "token1Price": "0.0005474611394625105892218298928427467"
+  },
+  {
+    "id": "0x06da0fd433c1a5d7a4faa01111c044910a184553",
+    "token0": {
+      "id": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "symbol": "WETH",
+      "decimals": "18"
+    },
+    "token1": {
+      "id": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "symbol": "USDT",
+      "decimals": "6"
+    },
+    "token0Price": "0.000546565413753762706409526210112599",
+    "token1Price": "1829.607170223393458133327276745011"
+  },
+  {
+    "id": "0xc3d03e4f041fd4cd388c549ee2a29a9e5075882f",
+    "token0": {
+      "id": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "symbol": "DAI",
+      "decimals": "18"
+    },
+    "token1": {
+      "id": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "symbol": "WETH",
+      "decimals": "18"
+    },
+    "token0Price": "1827.031281906481713053243738485411",
+    "token1Price": "0.0005473360034407916204611907259279391"
+  },
+  {
+    "id": "0x795065dcc9f64b5614c407a6efdc400da6221fb0",
+    "token0": {
+      "id": "0x6b3595068778dd592e39a122f4f5a5cf09c90fe2",
+      "symbol": "SUSHI",
+      "decimals": "18"
+    },
+    "token1": {
+      "id": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "symbol": "WETH",
+      "decimals": "18"
+    },
+    "token0Price": "1993.331504932186874470607623034992",
+    "token1Price": "0.0005016727009660242107322125148361957"
+  },
+  {
+    "id": "0xceff51756c56ceffca006cd410b03ffc46dd3a58",
+    "token0": {
+      "id": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+      "symbol": "WBTC",
+      "decimals": "8"
+    },
+    "token1": {
+      "id": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "symbol": "WETH",
+      "decimals": "18"
+    },
+    "token0Price": "0.06672014511339983961438844285558605",
+    "token1Price": "14.98797699406027688832841711648102"
+  },
+  {
+    "id": "0x34d7d7aaf50ad4944b70b320acb24c95fa2def7c",
+    "token0": {
+      "id": "0x383518188c0c6d7730d91b2c03a03c837814a899",
+      "symbol": "OHM",
+      "decimals": "9"
+    },
+    "token1": {
+      "id": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "symbol": "DAI",
+      "decimals": "18"
+    },
+    "token0Price": "0.01731446803360869838911715958935314",
+    "token1Price": "57.75516741599707238494346628553382"
+  }
+]
