@@ -1,9 +1,9 @@
 {
   "scripts": {
-    "start": "ts-node index.ts",
+    "start": "ts-node main.ts",
     "codegen": "ts-node ./src/scripts/graphcodegen.ts",
     "build": "rimraf dist && npx tsc",
-    "dev": "concurrently \"tsc -w\"  \"dist/index.js\"",
+    "dev": "concurrently \"tsc -w\"  \"dist/main.js\"",
     "test": "mocha --require ts-node/register src/test/*.spec.ts"
   },
   "dependencies": {},

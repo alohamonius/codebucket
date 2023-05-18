@@ -8,7 +8,7 @@ import express, {
 import "reflect-metadata";
 import * as compression from "compression";
 import { json, urlencoded } from "body-parser";
-import { Api } from "./src/ApiHelper";
+import { Api } from "./src/utils/ApiHelper";
 import { AppLogger } from "./app.logger";
 import { AppRouting } from "./api.routing";
 

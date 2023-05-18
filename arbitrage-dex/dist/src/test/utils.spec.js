@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const chai_1 = require("chai");
 const utils_1 = require("../utils/utils");
-const fs_module_1 = require("../fs.module");
+const fs_module_1 = require("../utils/fs.module");
 const path_1 = require("path");
 describe("test", async () => {
     const uni3 = await fs_module_1.Fs.loadFileAsync((0, path_1.join)(__dirname, "/data/uniswapv3mini.json")); //4
