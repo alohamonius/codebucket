@@ -14,5 +14,11 @@
   "dependencies": {
     "@graphql-mesh/transform-rename": "^0.93.1",
     "ts-node": "^10.9.1"
-  }
+  },
+  "include": [
+    "./**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

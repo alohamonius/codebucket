@@ -1,12 +1,12 @@
 sources:
-  - name: sushi3
+  - name: uniswap3
     handler:
       graphql:
         endpoint: https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3
         retry: 5
     transforms:
       - autoPagination: {}
-  - name: sushi2
+  - name: uniswap2
     handler:
       graphql:
         endpoint: https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2

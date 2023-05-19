@@ -2,11 +2,14 @@
   "scripts": {
     "start": "ts-node main.ts",
     "codegen": "ts-node ./src/scripts/graphcodegen.ts",
-    "build": "rimraf dist && npx tsc",
+    "build": "rimraf dist && npx tsc && ts-node ./src/scripts/deploy.ts",
     "dev": "concurrently \"tsc -w\"  \"dist/main.js\"",
-    "test": "mocha --require ts-node/register src/test/*.spec.ts"
+    "test": "mocha --require ts-node/register src/test/*.spec.ts",
+    "prod": "node dist/main.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "ts-node": "^10.9.1"
+  },
   "devDependencies": {
     "@graphprotocol/client-cli": "^2.2.21",
     "@graphprotocol/client-polling-live": "1.1.1",
@@ -29,13 +32,13 @@
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
     "fs": "^0.0.1-security",
+    "fs-extra": "^11.1.1",
     "graphql": "16.6.0",
     "mocha": "^10.2.0",
     "nodemon": "^2.0.22",
     "prettier": "^2.8.8",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^5.0.1",
-    "ts-node": "^10.9.1",
     "tsyringe": "^4.7.0",
     "typescript": "^5.0.4",
     "winston": "^3.8.2"
