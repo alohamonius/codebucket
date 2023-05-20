@@ -1,11 +1,13 @@
 {
+  "name": "dex-graph",
+  "main": "./index.ts",
   "scripts": {
-    "start": "ts-node main.ts",
+    "start": "ts-node index.ts",
     "codegen": "ts-node ./src/scripts/graphcodegen.ts",
     "build": "rimraf dist && npx tsc && ts-node ./src/scripts/deploy.ts",
-    "dev": "concurrently \"tsc -w\"  \"dist/main.js\"",
+    "dev": "concurrently \"tsc -w\"  \"dist/index.js\"",
     "test": "mocha --require ts-node/register src/test/*.spec.ts",
-    "prod": "node dist/main.js"
+    "prod": "node dist/index.js"
   },
   "dependencies": {
     "ts-node": "^10.9.1"

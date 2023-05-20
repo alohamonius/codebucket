@@ -1,0 +1,6 @@
+docker build -t graph-dex .
+docker run -p 3000:3000 graph-dex
+gcloud auth configure-docker
+docker tag graph-dex:latest eu.gcr.io/graph-dex/graph-dex-server
+docker push eu.gcr.io/graph-dex/graph-dex-server
+gcloud run deploy graph-dex-server --image eu.gcr.io/graph-dex/graph-dex-server --region europe-central2 --platform managed --port 3000

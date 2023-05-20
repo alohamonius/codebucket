@@ -6,11 +6,9 @@ import { DexPairsRepository } from "./src/graph/DexPairsRepository";
 import ExpressApi from "./Api";
 (async () => {
   const startable = container.resolve(DexGraphFactory);
-  const repository = new DexPairsRepository();
-  // container.registerInstance("DexPairsRepository", repository);
   const api = new ExpressApi();
 
-  const port = 3000;
+  const port = +process.env.PORT || 3000;
 
   await startable.StartAsync();
 

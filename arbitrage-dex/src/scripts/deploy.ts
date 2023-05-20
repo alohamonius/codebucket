@@ -4,6 +4,10 @@ const sourceDir = "./src/graph/clients";
 const targetDir = "dist/src/graph/clients";
 
 fss.readdir(sourceDir, (err, files) => {
+  if (err) {
+    console.error("Error reading directory:", err);
+    return;
+  }
   for (const folder of files) {
     const sourcePath = `${sourceDir}/${folder}`;
     const targetPath = `${targetDir}/${folder}`;
