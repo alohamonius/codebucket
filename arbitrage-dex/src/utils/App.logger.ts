@@ -1,4 +1,5 @@
 import { Logger, format, createLogger, transports, log } from "winston";
+import { Fs } from "./fs.module";
 
 export class AppLogger {
   static customDateFormat = format.printf(({ timestamp, level, message }) => {
@@ -18,6 +19,12 @@ export class AppLogger {
     ],
   });
 
+  public static file() {
+    // const e = await Fs.writeAsync(
+    //   "./pairsToPools.json",
+    //   Array.from(this.pairsToPools.entries())
+    // );
+  }
   public static info(data) {
     this.logger.log("info", this.GetValue(data));
   }

@@ -8,6 +8,7 @@ import {
   GetPoolsUniswapLiveDocument,
 } from "../../graph/clients/uniswap_rc/.graphclient";
 import { singleton } from "tsyringe";
+import { AppLogger } from "../../utils/App.logger";
 
 @singleton()
 export default class DexesConfig {
@@ -25,7 +26,7 @@ export default class DexesConfig {
       doc: GetPoolsUniswapDocument,
       name: "uniswap",
     });
-    console.log("DEXES_CONFIG_CREATED");
+    AppLogger.info(`DEXES_CONFIG_CREATED`);
   }
 }
 export interface IConfig {

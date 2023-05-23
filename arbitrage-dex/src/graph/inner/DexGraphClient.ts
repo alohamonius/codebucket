@@ -52,6 +52,9 @@ export default class DexGraphClient {
       dir: join(__dirname, "../clients/" + dex + "_rc"),
       configName: "graphclient",
       additionalPackagePrefixes: ["@graphprotocol/client-"],
+      throwOnInvalidConfig: true,
+      generateCode: false,
+      store: null,
     });
     const mesh = await getMesh(config);
     return new DexGraphClient(dex, mesh, document, liveDocument);

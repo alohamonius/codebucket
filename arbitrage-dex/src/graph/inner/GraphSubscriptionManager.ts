@@ -1,5 +1,6 @@
 import { DocumentNode } from "graphql";
 import { MeshInstance } from "@graphql-mesh/runtime";
+import { AppLogger } from "../../utils/App.logger";
 export default class SubscriptionManager {
   private _repeater: any;
   private _stopIteration: boolean;
@@ -11,6 +12,7 @@ export default class SubscriptionManager {
     this._stopIteration = false;
     this._dexName = dexName_;
     this._mesh = mesh_;
+    AppLogger.info(`SubscriptionManager ctor`);
   }
 
   public async coldSubscription(
@@ -39,7 +41,7 @@ export default class SubscriptionManager {
 
     const run = async () => {
       await new Promise<void>(async (resolve) => {
-        console.debug(dexName, "live data start");
+        AppLogger.info(`${dexName} live data started`);
         try {
           while (!this._stopIteration) {
             const { value, done } = await iterator.next();
@@ -47,7 +49,12 @@ export default class SubscriptionManager {
             if (done) {
               break;
             }
-
+            if (!value.data) {
+              AppLogger.error(
+                `${dexName} + "\n" + ${value.errors.map((e) => e.message)}`
+              );
+              continue;
+            }
             onData(value.data);
           }
         } finally {

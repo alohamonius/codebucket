@@ -1,4 +1,5 @@
 import { Pair, PoolInfo } from "../graph/types";
+import { AppLogger } from "./App.logger";
 
 export function pairToPools(
   objects: [string, Map<string, PoolInfo[]>][],
@@ -38,7 +39,7 @@ export function toDictinary(
       poolId: element.id,
       token0Price: element.token0Price,
       token1Price: element.token1Price,
-      pair: element.token0.symbol + "/" + element.token1.symbol,
+      pair: `${element.token0.symbol}/${element.token1.symbol}`,
       fee: element.feeTier ? parseFloat(element.feeTier) / 10000 : 0,
       dexName: exchange,
       totalVolumeUSD: element.volumeUSD,
@@ -50,7 +51,23 @@ export function toDictinary(
 }
 
 function toKey(element: Pair) {
-  return (element.token0.id + "_" + element.token1.id).toLowerCase();
+  return `${element.token0.id}_${element.token1.id}`;
+}
+const bytesToMb = (bytes) => Math.round((bytes / 1024 / 1024) * 100) / 100;
+export function logMemory() {
+  const used = process.memoryUsage();
+  const row = {
+    rss: bytesToMb(used.rss),
+    heapTotal: bytesToMb(used.heapTotal),
+    heapUsed: bytesToMb(used.heapUsed),
+    external: bytesToMb(used.external),
+    stack: bytesToMb(used.rss - used.heapTotal),
+  };
+  AppLogger.info(row);
+  // console.table(row);
+  // for (let key in used) {
+  //   AppLogger.info(`Memory: ${key} ${bytesToMb(used[key])} MB`);
+  // }
 }
 
 export function distinct(...arrays): any[] {
@@ -67,7 +84,7 @@ export function distinctKey<T>(array: T[], key: keyof T): T[] {
 }
 
 export function getPairIds(pairs: Pair[]): string[] {
-  return pairs.map((d) => d.token0.id + "_" + d.token1.id);
+  return pairs.map(toKey);
 }
 
 export function delay(ms: number): Promise<void> {

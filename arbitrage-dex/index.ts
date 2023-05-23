@@ -4,9 +4,12 @@ import DexGraphFactory from "./src/graph/startable/DexGraphFactory";
 import { AppLogger } from "./src/utils/App.logger";
 import { DexPairsRepository } from "./src/graph/DexPairsRepository";
 import ExpressApi from "./Api";
+import { logMemory } from "./src/utils/utils";
 (async () => {
   const startable = container.resolve(DexGraphFactory);
   const api = new ExpressApi();
+
+  logMemory();
 
   const port = +process.env.PORT || 3000;
 

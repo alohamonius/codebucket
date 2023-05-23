@@ -1,11 +1,15 @@
 import { injectable, singleton } from "tsyringe";
 import { PoolInfo } from "./types";
+import { AppLogger } from "../utils/App.logger";
 
 @singleton()
 // @injectable()
 export class DexPairsRepository {
   public pairsToPools = new Map<string, PoolInfo[]>();
 
+  constructor() {
+    AppLogger.info("DexPairsRepository ctor");
+  }
   public get(pairIds: string[]): Map<string, PoolInfo[]> {
     const result = new Map<string, PoolInfo[]>();
 

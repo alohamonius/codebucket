@@ -15,7 +15,7 @@ sources:
       - autoPagination: {}
 plugins:
   - pollingLive:
-      defaultInterval: 10000
+      defaultInterval: 1000
 documents:
   - ./graphql/GetPoolsUniswap.gql
   - ./graphql/GetPoolsUniswapLive.gql

@@ -3,6 +3,7 @@ import { DexPairsRepository } from "../graph/DexPairsRepository";
 import AppRoute from "./AppRoute";
 import { Lifecycle, autoInjectable, container, scoped } from "tsyringe";
 import { body, matchedData, validationResult } from "express-validator";
+import { AppLogger } from "../utils/App.logger";
 
 @autoInjectable()
 export default class GraphController implements AppRoute {
@@ -15,6 +16,7 @@ export default class GraphController implements AppRoute {
       body("pairs").exists().withMessage("required"),
       this.post
     );
+    AppLogger.info(`GraphController ctor`);
     this.repository = repository;
   }
 

@@ -23,7 +23,6 @@ export namespace Fs {
     return new Promise((res, rej) => {
       fs.writeFile(path, JSON.stringify(data), (err) => {
         if (err) rej(err);
-        console.log("Saved!");
       });
       res(true);
     });
