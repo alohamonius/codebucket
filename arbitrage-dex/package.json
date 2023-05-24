@@ -15,6 +15,7 @@
   "devDependencies": {
     "@graphprotocol/client-cli": "^2.2.21",
     "@graphprotocol/client-polling-live": "1.1.1",
+    "graphql": "16.6.0",
     "@types/body-parser": "^1.19.2",
     "@types/chai": "^4.3.5",
     "@types/cors": "^2.8.13",
@@ -35,7 +36,6 @@
     "express-validator": "^7.0.1",
     "fs": "^0.0.1-security",
     "fs-extra": "^11.1.1",
-    "graphql": "16.6.0",
     "mocha": "^10.2.0",
     "nodemon": "^2.0.22",
     "prettier": "^2.8.8",

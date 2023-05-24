@@ -54,7 +54,7 @@ function toKey(element: Pair) {
   return `${element.token0.id}_${element.token1.id}`;
 }
 const bytesToMb = (bytes) => Math.round((bytes / 1024 / 1024) * 100) / 100;
-export function logMemory() {
+export function getMemoryUsage() {
   const used = process.memoryUsage();
   const row = {
     rss: bytesToMb(used.rss),
@@ -63,11 +63,7 @@ export function logMemory() {
     external: bytesToMb(used.external),
     stack: bytesToMb(used.rss - used.heapTotal),
   };
-  AppLogger.info(row);
-  // console.table(row);
-  // for (let key in used) {
-  //   AppLogger.info(`Memory: ${key} ${bytesToMb(used[key])} MB`);
-  // }
+  return row;
 }
 
 export function distinct(...arrays): any[] {

@@ -1,28 +1,34 @@
 import "reflect-metadata";
-import { Lifecycle, container } from "tsyringe";
-import DexGraphFactory from "./src/graph/startable/DexGraphFactory";
+import { container } from "tsyringe";
+import Starter from "./src/graph/startable/Starter";
 import { AppLogger } from "./src/utils/App.logger";
-import { DexPairsRepository } from "./src/graph/DexPairsRepository";
 import ExpressApi from "./Api";
-import { logMemory } from "./src/utils/utils";
+import { getMemoryUsage } from "./src/utils/utils";
+
+const MEMORY_LIMIT_TO_RESTART_SUBSCRIPTIONS_MB = 1800;
+
+const startable = container.resolve(Starter);
+
 (async () => {
-  const startable = container.resolve(DexGraphFactory);
   const api = new ExpressApi();
 
-  logMemory();
+  getMemoryUsage();
 
   const port = +process.env.PORT || 3000;
 
   await startable.StartAsync();
 
-  const filter = {
-    first: 30000,
-    skip: 0,
-    totalLocked: 5000,
-  };
-  startable.runBackgroundFetchData(filter); //not await for now
-
   api.run(port, () => {
     AppLogger.info(`API started on port:${port}`);
   });
+
+  setInterval(async () => {
+    AppLogger.info(`Memory usage checker`);
+    const { heapUsed } = getMemoryUsage();
+    if (heapUsed > MEMORY_LIMIT_TO_RESTART_SUBSCRIPTIONS_MB) {
+      await startable.RestartAsync();
+      AppLogger.info(`Subscription restarted`);
+    }
+    AppLogger.info(`Memory is okay Heap: ${heapUsed}MB`);
+  }, 25000);
 })();
