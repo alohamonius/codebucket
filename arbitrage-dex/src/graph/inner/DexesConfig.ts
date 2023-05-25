@@ -3,11 +3,13 @@ import {
   GetPoolsSushiDocument,
   GetPoolsSushiLiveDocument,
   subscribe as sushi,
+  execute as sushiExecute,
 } from "../../graph/clients/sushi_rc/.graphclient";
 import {
   GetPoolsUniswapDocument,
   GetPoolsUniswapLiveDocument,
   subscribe as uniswap,
+  execute as uniswapExecute,
 } from "../../graph/clients/uniswap_rc/.graphclient";
 import { singleton } from "tsyringe";
 import { AppLogger } from "../../utils/App.logger";
@@ -28,6 +30,7 @@ export default class DexesConfig {
       doc: GetPoolsSushiDocument,
       name: "sushi",
       subscribe: sushi,
+      execute: sushiExecute,
       filter: this.filter,
     });
 
@@ -36,6 +39,7 @@ export default class DexesConfig {
       doc: GetPoolsUniswapDocument,
       name: "uniswap",
       subscribe: uniswap,
+      execute: uniswapExecute,
       filter: this.filter,
     });
     AppLogger.info(`DEXES_CONFIG_CREATED`);
@@ -47,4 +51,5 @@ export interface IConfig {
   name: string;
   subscribe: any;
   filter: any;
+  execute: any;
 }

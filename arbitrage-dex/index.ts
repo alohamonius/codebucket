@@ -1,13 +1,16 @@
 import "reflect-metadata";
 import { container } from "tsyringe";
-import Starter from "./src/graph/startable/Starter";
 import { AppLogger } from "./src/utils/App.logger";
 import ExpressApi from "./Api";
 import { getMemoryUsage } from "./src/utils/utils";
+import LiveJob from "./src/graph/jobs/LiveJob";
+import PollingJob from "./src/graph/jobs/PollingJob";
 
 const MEMORY_LIMIT_TO_RESTART_SUBSCRIPTIONS_MB = 1800;
+const DEFAULT_POLLING_INTERVAL_SECONDS = 15;
 
-const startable = container.resolve(Starter);
+const liveJob = container.resolve(LiveJob);
+const pollingJob = container.resolve(PollingJob);
 
 (async () => {
   const api = new ExpressApi();
@@ -16,7 +19,7 @@ const startable = container.resolve(Starter);
 
   const port = +process.env.PORT || 3000;
 
-  await startable.StartAsync();
+  await pollingJob.StartAsync(DEFAULT_POLLING_INTERVAL_SECONDS);
 
   api.run(port, () => {
     AppLogger.info(`API started on port:${port}`);
@@ -25,10 +28,7 @@ const startable = container.resolve(Starter);
   setInterval(async () => {
     AppLogger.info(`Memory usage checker`);
     const { heapUsed } = getMemoryUsage();
-    if (heapUsed > MEMORY_LIMIT_TO_RESTART_SUBSCRIPTIONS_MB) {
-      await startable.RestartAsync();
-      AppLogger.info(`Subscription restarted`);
-    }
+
     AppLogger.info(`Memory is okay Heap: ${heapUsed}MB`);
-  }, 25000);
+  }, 10000);
 })();

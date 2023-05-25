@@ -6,7 +6,7 @@ import Subscriber from "../inner/Subscriber";
 
 @singleton()
 @autoInjectable()
-export default class Starter {
+export default class LiveJob {
   config: DexesConfig;
   handler: DexDataHandler;
   ready = false;
@@ -14,7 +14,7 @@ export default class Starter {
   constructor(config_: DexesConfig, handler_: DexDataHandler) {
     this.config = config_;
     this.handler = handler_;
-    AppLogger.info(`Starter ctor`);
+    AppLogger.info(`LiveJob ctor`);
   }
 
   async StartAsync() {

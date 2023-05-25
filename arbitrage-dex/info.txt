@@ -12,3 +12,51 @@ gcloud run deploy graph-dex-server --image eu.gcr.io/graph-dex/graph-dex-server 
 
 node -r ts-node/register --inspect index.ts       
 node -r ts-node/register --trace-gc index.ts       
+
+
+
+
+{
+  pools(first:1000 orderBy:volumeUSD orderDirection:desc, where:{
+    token0_starts_with:"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    token1_starts_with:"0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+  }){
+    id
+     token0 {
+      id
+      symbol
+      decimals
+    }
+    token1 {
+      id
+      symbol
+      decimals
+    }
+    token0Price
+    token1Price
+    volumeUSD
+    feeTier
+  }
+}
+
+{
+  pools(first:1000 orderBy:volumeUSD orderDirection:desc, where:{
+    token0_in:["0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48","0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"]
+  }){
+    id
+     token0 {
+      id
+      symbol
+      decimals
+    }
+    token1 {
+      id
+      symbol
+      decimals
+    }
+    token0Price
+    token1Price
+    volumeUSD
+    feeTier
+  }
+}
