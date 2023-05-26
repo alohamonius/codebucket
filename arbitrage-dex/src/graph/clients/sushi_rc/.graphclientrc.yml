@@ -1,21 +1,46 @@
 sources:
-  - name: sushi3
+  - name: sushi3_eth
     handler:
       graphql:
         endpoint: https://api.thegraph.com/subgraphs/name/sushi-v3/v3-ethereum
         retry: 5
     transforms:
+      - addSourceName: true
+      - prefix:
+          value: sushi_eth_3_
+          includeRootOperations: true
+          includeTypes: false
       - autoPagination: {}
-  - name: sushi2
+  - name: sushi2_eth
     handler:
       graphql:
         endpoint: https://api.thegraph.com/subgraphs/name/sushiswap/exchange
         retry: 5
     transforms:
+      - addSourceName: true
+      - prefix:
+          value: sushi_eth_2_
+          includeRootOperations: true
+          includeTypes: false
       - autoPagination: {}
+  - name: sushi2_bsc
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/unchase/sushiswap-bsc
+        retry: 5
+    transforms:
+      - addSourceName: true
+      - prefix:
+          value: sushi_bsc_2_
+          includeRootOperations: true
+          includeTypes: false
+      - autoPagination: {}
+
 plugins:
   - pollingLive:
       defaultInterval: 1000
 documents:
   - ./graphql/GetPoolsSushi.gql
   - ./graphql/GetPoolsSushiLive.gql
+serve:
+  browser: false

@@ -5,9 +5,11 @@
     "start": "ts-node index.ts",
     "codegen": "ts-node ./src/scripts/graphcodegen.ts",
     "build": "rimraf dist && npx tsc && ts-node ./src/scripts/deploy.ts",
-    "dev": "concurrently \"tsc -w\"  \"dist/index.js\"",
+    "dev": "concurrently \"tsc -w\"  \"npm run start\"",
     "test": "mocha --require ts-node/register src/test/*.spec.ts",
-    "prod": "node dist/index.js"
+    "prod": "node dist/index.js",
+    "check": "tsc --pretty --noEmit",
+    "inspect": "node -r ts-node/register --inspect index.ts"
   },
   "dependencies": {
     "ts-node": "^10.9.1"

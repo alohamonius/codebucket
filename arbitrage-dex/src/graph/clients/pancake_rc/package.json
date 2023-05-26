@@ -10,7 +10,6 @@
     "typescript": "^5.0.4"
   },
   "scripts": {
-    "start": "ts-node main.ts",
     "codegen": "graphclient build",
     "dev": "graphclient serve-dev"
   },

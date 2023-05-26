@@ -19,13 +19,13 @@ export default class LiveJob {
 
   async StartAsync() {
     this.config.DEX_TO_DOCS.map(async (dex) => {
-      const repeater = await dex.subscribe(dex.liveDoc, dex.filter);
-      const iterator = repeater[Symbol.asyncIterator]();
-      const subscriber = new Subscriber();
-      subscriber.Start(iterator, dex.name, (name, data) => {
-        this.handler.handle(name, data);
-      }); //not awaited, push and forgot, long running process
-      this._subscribers.push(subscriber);
+      // const repeater = await dex.subscribe(dex.liveDoc, dex.filter);
+      // const iterator = repeater[Symbol.asyncIterator]();
+      // const subscriber = new Subscriber();
+      // subscriber.Start(iterator, dex.name, (name, data) => {
+      //   this.handler.handle(name, data);
+      // }); //not awaited, push and forgot, long running process
+      // this._subscribers.push(subscriber);
     });
   }
 

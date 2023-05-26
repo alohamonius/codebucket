@@ -17,17 +17,23 @@ fs.readdir(parentFolder, (err, files) => {
 
   clientFolders.forEach((folder) => {
     const folderPath = `${parentFolder}/${folder}`;
-    exec("npm run codegen", { cwd: folderPath }, (error, stdout, stderr) => {
-      if (error) {
-        console.error(
-          `Error running 'npm run codegen' in ${folderPath}:`,
-          error
-        );
-      } else {
-        console.log(`'npm run codegen' executed successfully in ${folderPath}`);
+    exec(
+      "yarn install && npm run codegen",
+      { cwd: folderPath },
+      (error, stdout, stderr) => {
+        if (error) {
+          console.error(
+            `Error running 'npm run codegen' in ${folderPath}:`,
+            error
+          );
+        } else {
+          console.log(
+            `'npm run codegen' executed successfully in ${folderPath}`
+          );
+        }
+        console.log(stdout);
+        console.error(stderr);
       }
-      console.log(stdout);
-      console.error(stderr);
-    });
+    );
   });
 });

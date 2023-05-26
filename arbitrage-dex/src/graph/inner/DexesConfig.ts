@@ -4,33 +4,50 @@ import {
   GetPoolsSushiLiveDocument,
   subscribe as sushi,
   execute as sushiExecute,
+  getBuiltGraphSDK as sushiSdk,
 } from "../../graph/clients/sushi_rc/.graphclient";
 import {
   GetPoolsUniswapDocument,
   GetPoolsUniswapLiveDocument,
   subscribe as uniswap,
   execute as uniswapExecute,
+  getBuiltGraphSDK as uniswapSdk,
 } from "../../graph/clients/uniswap_rc/.graphclient";
 import { singleton } from "tsyringe";
 import { AppLogger } from "../../utils/App.logger";
+import {
+  GetPoolsPancakeDocument,
+  GetPoolsPancakeLiveDocument,
+  subscribe as pancakeSubscribe,
+  getBuiltGraphSDK as pancakeSdk,
+} from "../../graph/clients/pancake_rc/.graphclient";
 
 @singleton()
 export default class DexesConfig {
   public DEX_TO_DOCS: IConfig[] = [];
 
-  filter = {
+  filter: any = {
     first: 30000,
     skip: 0,
-    totalLocked: 5000,
+    totalLocked: 20000,
   };
 
   constructor() {
+    this.DEX_TO_DOCS.push({
+      liveDoc: GetPoolsPancakeLiveDocument,
+      doc: GetPoolsPancakeDocument,
+      name: "pancake",
+      subscribe: pancakeSubscribe,
+      execute: () => pancakeSdk().GetPoolsPancake(this.filter),
+      filter: this.filter,
+    });
+
     this.DEX_TO_DOCS.push({
       liveDoc: GetPoolsSushiLiveDocument,
       doc: GetPoolsSushiDocument,
       name: "sushi",
       subscribe: sushi,
-      execute: sushiExecute,
+      execute: () => sushiSdk().GetPoolsSushi(this.filter),
       filter: this.filter,
     });
 
@@ -39,7 +56,7 @@ export default class DexesConfig {
       doc: GetPoolsUniswapDocument,
       name: "uniswap",
       subscribe: uniswap,
-      execute: uniswapExecute,
+      execute: () => uniswapSdk().GetPoolsUniswap(this.filter),
       filter: this.filter,
     });
     AppLogger.info(`DEXES_CONFIG_CREATED`);

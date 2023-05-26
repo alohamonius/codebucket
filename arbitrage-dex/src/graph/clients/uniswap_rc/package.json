@@ -2,8 +2,11 @@
   "devDependencies": {
     "@graphprotocol/client-cli": "^2.2.21",
     "@graphprotocol/client-polling-live": "1.1.1",
+    "@graphql-mesh/transform-prefix": "^0.93.1",
+    "@graphql-mesh/transform-rename": "^0.93.1",
     "@types/node": "^18.16.0",
     "graphql": "16.6.0",
+    "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
   },
   "scripts": {
@@ -11,10 +14,7 @@
     "codegen": "graphclient build",
     "dev": "graphclient serve-dev"
   },
-  "dependencies": {
-    "@graphql-mesh/transform-rename": "^0.93.1",
-    "ts-node": "^10.9.1"
-  },
+  "dependencies": {},
   "include": [
     "./**/*",
     "./.graphclientrc.yml",

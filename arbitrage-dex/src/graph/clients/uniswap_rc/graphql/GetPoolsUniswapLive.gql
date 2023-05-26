@@ -3,7 +3,7 @@ query GetPoolsUniswapLive(
   $skip: Int = 0
   $totalLocked: BigDecimal = 100
 ) @live {
-  v3: pools(
+  uniswap_eth_3_pools(
     first: $first
     skip: $skip
     orderBy: volumeUSD
@@ -32,7 +32,7 @@ query GetPoolsUniswapLive(
     feeTier
   }
 
-  v2: pairs(
+  uniswap_eth_2_pairs(
     first: $first
     skip: $skip
     orderBy: volumeUSD
@@ -53,5 +53,63 @@ query GetPoolsUniswapLive(
     token0Price
     token1Price
     volumeUSD
+  }
+
+  uniswap_matic_3_pools(
+    first: $first
+    skip: $skip
+    orderBy: volumeUSD
+    orderDirection: desc
+    where: { totalValueLockedUSD_gt: $totalLocked }
+  ) {
+    id
+    token0 {
+      id
+      symbol
+      decimals
+    }
+    token1 {
+      id
+      symbol
+      decimals
+    }
+    poolDayData(first: 1, orderBy: date, orderDirection: desc) {
+      id
+      volumeUSD
+      date
+    }
+    token1Price
+    token0Price
+    volumeUSD
+    feeTier
+  }
+
+  uniswap_bsc_3_pools(
+    first: $first
+    skip: $skip
+    orderBy: volumeUSD
+    orderDirection: desc
+    where: { totalValueLockedUSD_gt: $totalLocked }
+  ) {
+    id
+    token0 {
+      id
+      symbol
+      decimals
+    }
+    token1 {
+      id
+      symbol
+      decimals
+    }
+    poolDayData(first: 1, orderBy: date, orderDirection: desc) {
+      id
+      volumeUSD
+      date
+    }
+    token1Price
+    token0Price
+    volumeUSD
+    feeTier
   }
 }

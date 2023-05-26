@@ -899,6 +899,15 @@
     json-pointer "0.6.2"
     lodash.get "4.4.2"
 
+"@graphql-mesh/transform-prefix@^0.93.1":
+  version "0.93.1"
+  resolved "https://registry.yarnpkg.com/@graphql-mesh/transform-prefix/-/transform-prefix-0.93.1.tgz#0f232ddbd20f192ca62b19139ba4fc2b0b24364c"
+  integrity sha512-MS84H6C0GVyCXjLjwtg6yvjCdDMp3/EzznZ5sBG3k+tkoNmCoNGD1vtWWIpiTIzMUibbjtj46DHvFR0J3e/oKw==
+  dependencies:
+    "@graphql-tools/delegate" "^9.0.32"
+    "@graphql-tools/wrap" "^9.4.2"
+    graphql-scalars "^1.20.4"
+
 "@graphql-mesh/transform-rename@^0.93.1":
   version "0.93.1"
   resolved "https://registry.yarnpkg.com/@graphql-mesh/transform-rename/-/transform-rename-0.93.1.tgz#85906d0853ad1b1ec7447bec0ee2c6186cee6113"

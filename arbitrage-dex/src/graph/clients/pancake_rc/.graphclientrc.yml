@@ -1,0 +1,33 @@
+sources:
+  - name: pancake_bsc_3
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/pancakeswap/exchange-v3-bsc
+        retry: 3
+    transforms:
+      - prefix:
+          value: pancake_bsc_3_
+          includeRootOperations: true
+          includeTypes: false
+      - autoPagination: {}
+
+  - name: pancake_eth_3
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/pancakeswap/exchange-v3-eth
+        retry: 3
+    transforms:
+      - prefix:
+          value: pancake_eth_3_
+          includeRootOperations: true
+          includeTypes: false
+      - autoPagination: {}
+
+plugins:
+  - pollingLive:
+      defaultInterval: 1000
+documents:
+  - ./graphql/GetPoolsPancake.gql
+  - ./graphql/GetPoolsPancakeLive.gql
+serve:
+  browser: false

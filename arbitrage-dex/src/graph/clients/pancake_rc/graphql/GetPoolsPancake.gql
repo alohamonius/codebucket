@@ -1,9 +1,9 @@
-query GetPoolsSushiLive(
+query GetPoolsPancake(
   $first: Int = 100
   $skip: Int = 0
   $totalLocked: BigDecimal = 100
-) @live {
-  sushi_eth_3_pools(
+) {
+  pancake_bsc_3_pools(
     first: $first
     skip: $skip
     orderBy: volumeUSD
@@ -32,24 +32,25 @@ query GetPoolsSushiLive(
     feeTier
   }
 
-  sushi_eth_2_pairs(
+  pancake_eth_3_pools(
     first: $first
     skip: $skip
     orderBy: volumeUSD
     orderDirection: desc
+    where: { totalValueLockedUSD_gt: $totalLocked }
   ) {
     id
     token0 {
       id
       symbol
-      decimals
+      name
     }
     token1 {
       id
       symbol
-      decimals
+      name
     }
-    poolDayData: dayData(first: 1, orderBy: date, orderDirection: desc) {
+    poolDayData(first: 1, orderBy: date, orderDirection: desc) {
       id
       volumeUSD
       date
@@ -57,30 +58,6 @@ query GetPoolsSushiLive(
     token0Price
     token1Price
     volumeUSD
-  }
-
-  sushi_bsc_2_pairs(
-    first: $first
-    skip: $skip
-    orderBy: syncAtTimestamp
-    orderDirection: desc
-  ) {
-    id
-    token0 {
-      id
-      symbol
-      decimals
-    }
-    token1 {
-      id
-      symbol
-      decimals
-    }
-
-    token0Price
-    token1Price
-    reserve0
-    reserve1
-    syncAtTimestamp
+    feeTier
   }
 }
