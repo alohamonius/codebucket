@@ -1,53 +1,35 @@
 import { singleton } from "tsyringe";
-import {
-  distinct,
-  distinctKey,
-  getPairIds,
-  pairToPools,
-  toDictinary,
-} from "../utils/utils";
-import { Pair, PoolInfo } from "./types";
-import { Fs } from "../utils/fs.module";
-import { DexPairsRepository } from "./DexPairsRepository";
+import { distinctKey, getPairIds, toDictinary } from "../utils/utils";
+import { DexPairsRepositoryMemory } from "./DexPairsRepositoryMemory";
 import { AppLogger } from "../utils/App.logger";
 import { DexChainData } from "./jobs/DexChainData";
-interface UniswapFamilyDexGraphData {
-  matic_v3?: Pair[] | undefined;
-  bsc_v3?: Pair[] | undefined;
-  eth_v2?: Pair[] | undefined;
-  eth_v3?: Pair[] | undefined;
-  bsc_v2?: Pair[] | undefined;
-}
+import { ChainType, GraphId, GraphPoolId, PairId } from "../models/GraphId";
+import { GraphPoolData } from "../models/GraphPool";
 
 @singleton()
 export class DexDataHandler {
-  private uniquePairs: string[] = [];
+  private _storage: DexPairsRepositoryMemory;
+  private _db = new Map<GraphId, Map<PairId, GraphPoolData[]>>();
 
-  private _storage: DexPairsRepository;
-  private _db = new Map<string, Map<string, PoolInfo[]>>();
-
-  constructor(repository: DexPairsRepository) {
+  constructor(repository: DexPairsRepositoryMemory) {
     AppLogger.info("DexDataHandler ctor");
     this._storage = repository;
-    this.uniquePairs = [];
   }
-  public async handle(dexChainDatas: DexChainData[]) {
-    dexChainDatas.forEach((dexChainData) => {
-      AppLogger.info(
-        `${dexChainData.dexName}/${dexChainData.version}/${dexChainData.chain}/${dexChainData.data.length}`
-      );
-      const uniquePairs = distinctKey<Pair>(dexChainData.data, "id");
-      const pairIds: string[] = getPairIds(uniquePairs);
+  public async handle(graphData: DexChainData[]) {
+    graphData.forEach((data) => {
+      const id = data.graphDataId.id();
+      const pools = distinctKey<GraphPoolData>(data.data, "pairId");
 
-      const dexKey = `${dexChainData.dexName}_${dexChainData.version}_${dexChainData.chain}`;
-      const dexData = toDictinary(uniquePairs, dexKey);
-      this.uniquePairs = distinct(pairIds, this.uniquePairs);
+      const pairIds: PairId[] = pools.map((c) => c.pairId);
 
-      this._db.set(dexKey, dexData);
+      this._storage.setChainPairs(data.graphDataId.chain, pairIds);
+      const dexСhainVData = toDictinary(pools);
+
+      AppLogger.info(`${id} has pairs:${pairIds.length}`);
+
+      this._db.set(id, dexСhainVData);
     });
 
-    this._storage.init(
-      pairToPools(Array.from(this._db.entries()), this.uniquePairs)
-    );
+    this._storage.setChainPairPools(Array.from(this._db.entries()));
   }
 }

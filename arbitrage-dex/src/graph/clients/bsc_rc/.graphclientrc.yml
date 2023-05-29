@@ -1,32 +1,32 @@
 sources:
-  - name: sushi3_eth
+  - name: uniswap_bsc_3
     handler:
       graphql:
-        endpoint: https://api.thegraph.com/subgraphs/name/sushi-v3/v3-ethereum
-        retry: 5
+        endpoint: https://api.thegraph.com/subgraphs/name/ianlapham/uniswap-v3-bsc
+        # strategy: race
+        retry: 3
     transforms:
       - addSourceName: true
       - prefix:
-          value: sushi_eth_3_
+          value: uniswap_bsc_3_
           includeRootOperations: true
           includeTypes: false
       - autoPagination:
-        validateSchema: true
-        limitOfRecords: 1000
-  - name: sushi2_eth
+          validateSchema: true
+          limitOfRecords: 1000
+  - name: pancake_bsc_3
     handler:
       graphql:
-        endpoint: https://api.thegraph.com/subgraphs/name/sushiswap/exchange
-        retry: 5
+        endpoint: https://api.thegraph.com/subgraphs/name/pancakeswap/exchange-v3-bsc
+        retry: 3
     transforms:
-      - addSourceName: true
       - prefix:
-          value: sushi_eth_2_
+          value: pancake_bsc_3_
           includeRootOperations: true
           includeTypes: false
       - autoPagination:
-        validateSchema: true
-        limitOfRecords: 1000
+          validateSchema: true
+          limitOfRecords: 1000
   - name: sushi2_bsc
     handler:
       graphql:
@@ -39,14 +39,12 @@ sources:
           includeRootOperations: true
           includeTypes: false
       - autoPagination:
-        validateSchema: true
-        limitOfRecords: 1000
-
+          validateSchema: true
+          limitOfRecords: 1000
 plugins:
   - pollingLive:
       defaultInterval: 1000
 documents:
-  - ./graphql/GetPoolsSushi.gql
-  - ./graphql/GetPoolsSushiLive.gql
+  - ./graphql/*.gql
 serve:
   browser: false

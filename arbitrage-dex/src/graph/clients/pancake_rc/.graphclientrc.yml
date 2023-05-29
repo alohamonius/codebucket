@@ -9,7 +9,9 @@ sources:
           value: pancake_bsc_3_
           includeRootOperations: true
           includeTypes: false
-      - autoPagination: {}
+      - autoPagination:
+        validateSchema: true
+        limitOfRecords: 1000
 
   - name: pancake_eth_3
     handler:
@@ -21,13 +23,14 @@ sources:
           value: pancake_eth_3_
           includeRootOperations: true
           includeTypes: false
-      - autoPagination: {}
+      - autoPagination:
+        validateSchema: true
+        limitOfRecords: 1000
 
 plugins:
   - pollingLive:
       defaultInterval: 1000
 documents:
-  - ./graphql/GetPoolsPancake.gql
-  - ./graphql/GetPoolsPancakeLive.gql
+  - ./graphql/*.gql
 serve:
   browser: false

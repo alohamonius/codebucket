@@ -11,7 +11,9 @@ sources:
           value: uniswap_eth_3_
           includeRootOperations: true
           includeTypes: false
-      - autoPagination: {}
+      - autoPagination:
+        validateSchema: true
+        limitOfRecords: 1000
   - name: uniswap2_eth
     handler:
       graphql:
@@ -23,7 +25,9 @@ sources:
           value: uniswap_eth_2_
           includeRootOperations: true
           includeTypes: false
-      - autoPagination: {}
+      - autoPagination:
+        validateSchema: true
+        limitOfRecords: 1000
   - name: uniswap_matic_3
     handler:
       graphql:
@@ -36,7 +40,9 @@ sources:
           value: uniswap_matic_3_
           includeRootOperations: true
           includeTypes: false
-      - autoPagination: {}
+      - autoPagination:
+        validateSchema: true
+        limitOfRecords: 1000
   - name: uniswap_bsc_3
     handler:
       graphql:
@@ -49,7 +55,9 @@ sources:
           value: uniswap_bsc_3_
           includeRootOperations: true
           includeTypes: false
-      - autoPagination: {}
+      - autoPagination:
+        validateSchema: true
+        limitOfRecords: 1000
 
 plugins:
   - pollingLive:

@@ -1,0 +1,75 @@
+sources:
+  - name: pancake_eth_3
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/pancakeswap/exchange-v3-eth
+        retry: 3
+    transforms:
+      - prefix:
+          value: pancake_eth_3_
+          includeRootOperations: true
+          includeTypes: false
+      - autoPagination:
+          validateSchema: true
+          limitOfRecords: 1000
+  - name: sushi3_eth
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/sushi-v3/v3-ethereum
+        retry: 5
+    transforms:
+      - prefix:
+          value: sushi_eth_3_
+          includeRootOperations: true
+          includeTypes: false
+      - autoPagination:
+          validateSchema: true
+          limitOfRecords: 1000
+  - name: sushi2_eth
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/sushiswap/exchange
+        retry: 5
+    transforms:
+      - prefix:
+          value: sushi_eth_2_
+          includeRootOperations: true
+          includeTypes: false
+      - autoPagination:
+          validateSchema: true
+          limitOfRecords: 1000
+  - name: uniswap_eth_3
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3
+        # strategy: race
+        retry: 3
+    transforms:
+      - addSourceName: true
+      - prefix:
+          value: uniswap_eth_3_
+          includeRootOperations: true
+          includeTypes: false
+      - autoPagination:
+          validateSchema: true
+          limitOfRecords: 1000
+  - name: uniswap2_eth
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2
+        retry: 3
+    transforms:
+      - prefix:
+          value: uniswap_eth_2_
+          includeRootOperations: true
+          includeTypes: false
+      - autoPagination:
+          validateSchema: true
+          limitOfRecords: 1000
+plugins:
+  - pollingLive:
+      defaultInterval: 1000
+documents:
+  - ./graphql/*.gql
+serve:
+  browser: false

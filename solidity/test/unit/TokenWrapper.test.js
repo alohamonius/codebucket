@@ -26,7 +26,6 @@ const ERC20ABI = require('@uniswap/v2-core/build/ERC20.json').abi;
 				ethers.provider
 			);
 			beforeEach(async function () {
-				debugger;
 				[owner, filledSigner, signerWithUsdt, signer3] =
 					await ethers.getSigners();
 				deployer = (await getNamedAccounts()).deployer;

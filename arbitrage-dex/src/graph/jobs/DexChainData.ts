@@ -1,6 +1,7 @@
+import { GraphDataId } from "../../models/GraphId";
+import { GraphPoolData } from "../../models/GraphPool";
+
 export interface DexChainData {
-  dexName: string;
-  chain: string;
-  version: string;
-  data: any[];
+  graphDataId: GraphDataId;
+  data: GraphPoolData[];
 }

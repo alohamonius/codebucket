@@ -28,5 +28,4 @@ async function start(apikey, orgId) {
       console.log(error.message);
     }
   }
-  debugger;
 }

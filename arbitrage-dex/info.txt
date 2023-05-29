@@ -7,20 +7,11 @@ gcloud run deploy graph-dex-server --image eu.gcr.io/graph-dex/graph-dex-server 
 
 
 
-reserve0
-    reserve1
-    
-
 https://api.thegraph.com/subgraphs/name/ianlapham/uniswap-v3-polygon
 https://api.thegraph.com/subgraphs/name/ianlapham/uniswap-v3-bsc
-
-
 https://api.thegraph.com/subgraphs/name/unchase/sushiswap-bsc   //sushi v2 bsc
-
-
 https://api.thegraph.com/subgraphs/name/pancakeswap/exchange-v3-bsc  //pancake bsc
 https://api.thegraph.com/subgraphs/name/pancakeswap/exchange-v3-eth  //pancale eth
-
 https://api.thegraph.com/subgraphs/name/pancakeswap/masterchef-v3-bsc //pancake shef bsc
 https://api.thegraph.com/subgraphs/name/pancakeswap/masterchef-v3-eth //pancake shef eth
 
@@ -30,52 +21,13 @@ https://thegraph.com/hosted-service/subgraph/pancakeswap/pairs // ????
 sushiswap/exchange
 sushi-v3/v3-ethereum
 
-
 node -r ts-node/register --inspect index.ts       
 node -r ts-node/register --trace-gc index.ts       
 
+1. gasPrice alchemy
+2. tokenPrice moralis - +- okay, usdt/uni2 weth/uni3
+3. association multi chain map bscUSDT_maticUSDT
 
-{
-  pools(first:1000 orderBy:volumeUSD orderDirection:desc, where:{
-    token0_starts_with:"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
-    token1_starts_with:"0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
-  }){
-    id
-     token0 {
-      id
-      symbol
-      decimals
-    }
-    token1 {
-      id
-      symbol
-      decimals
-    }
-    token0Price
-    token1Price
-    volumeUSD
-    feeTier
-  }
-}
 
-{
-  pools(first:1000 orderBy:volumeUSD orderDirection:desc, where:{
-    token0_in:["0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48","0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"]
-  }){
-    id
-     token0 {
-      id
-      symbol
-      decimals
-    }
-    token1 {
-      id
-      symbol
-      decimals
-    }
-    token0Price
-    token1Price
-    volumeUSD
-    feeTier
-  }
-}
+
+чи може бути на юні2 даі/weth а на 3 weth/dai

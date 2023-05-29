@@ -1,58 +1,66 @@
-import { Pair, PoolInfo } from "../graph/types";
-import { AppLogger } from "./App.logger";
+import {
+  Chain,
+  GraphId,
+  GraphPoolId,
+  GraphPairId,
+  PairId,
+} from "../models/GraphId";
+import { GraphPoolData } from "../models/GraphPool";
 
-export function pairToPools(
-  objects: [string, Map<string, PoolInfo[]>][],
-  uniquePairs: string[]
-): Map<string, PoolInfo[]> {
-  let pairToPools: Map<string, PoolInfo[]> = new Map<string, PoolInfo[]>();
-  for (let i = 0; i < uniquePairs.length; i++) {
-    const pairId = uniquePairs[i];
+export function graphToPairIdPools(
+  graphDexDatas: [GraphId, Map<PairId, GraphPoolData[]>][],
+  uniquePairs: Map<Chain, PairId[]>
+): Map<Chain, [PairId, GraphPoolData[]][]> {
+  let chainTo = new Map<Chain, [PairId, GraphPoolData[]][]>();
+  const chains = Array.from(uniquePairs.keys());
 
-    for (let j = 0; j < objects.length; j++) {
-      const dexName = objects[j][0];
-      const currentDexMap = objects[j][1];
+  const graphId =
+    graphDexDatas[0].length > 0
+      ? GraphPoolId.Create(graphDexDatas[0][0])
+      : null;
 
-      if (currentDexMap.has(pairId)) {
-        const pairData = currentDexMap.get(pairId);
-        if (pairToPools.has(pairId)) {
-          const poolData = pairToPools.get(pairId);
-          pairToPools.set(pairId, distinct(poolData.concat(pairData)));
-        } else {
-          pairToPools.set(pairId, pairData);
+  if (!graphId) {
+    return;
+  }
+
+  chains.forEach((chain) => {
+    let pairToPools = new Map<PairId, GraphPoolData[]>();
+    uniquePairs.get(chain).forEach((pairId: PairId) => {
+      for (let j = 0; j < graphDexDatas.length; j++) {
+        const dexPools = graphDexDatas[j][1];
+
+        if (dexPools.has(pairId)) {
+          const pairData = dexPools.get(pairId);
+          if (pairToPools.has(pairId)) {
+            const poolData = pairToPools.get(pairId);
+            pairToPools.set(pairId, distinct(poolData.concat(pairData)));
+          } else {
+            pairToPools.set(pairId, pairData);
+          }
         }
       }
-    }
-  }
-  return pairToPools;
+      const pairIdToPools = Array.from(pairToPools.entries());
+      chainTo.set(chain, pairIdToPools);
+    });
+  });
+  return chainTo;
 }
 
 export function toDictinary(
-  data: any[],
-  exchange: string
-): Map<string, PoolInfo[]> {
-  const test = new Map<string, PoolInfo[]>();
+  pools: GraphPoolData[]
+): Map<PairId, GraphPoolData[]> {
+  const pairIdToPools = new Map<PairId, GraphPoolData[]>();
 
-  data.forEach((element) => {
-    const key = toKey(element);
-    const poolInfo: PoolInfo = {
-      poolId: element.id,
-      token0Price: element.token0Price,
-      token1Price: element.token1Price,
-      pair: `${element.token0.symbol}/${element.token1.symbol}`,
-      fee: element.feeTier ? parseFloat(element.feeTier) / 10000 : 0,
-      dexName: exchange,
-      totalVolumeUSD: element.volumeUSD,
-      poolDayData: element.poolDayData,
-    };
-    test.has(key) ? test.get(key).push(poolInfo) : test.set(key, [poolInfo]);
+  pools.forEach((element) => {
+    const graphPair = GraphPairId.From(element);
+    const id = graphPair.id();
+    pairIdToPools.has(id)
+      ? pairIdToPools.get(id).push(element)
+      : pairIdToPools.set(id, [element]);
   });
-  return test;
+  return pairIdToPools;
 }
 
-function toKey(element: Pair) {
-  return `${element.token0.id}_${element.token1.id}`;
-}
 const bytesToMb = (bytes) => Math.round((bytes / 1024 / 1024) * 100) / 100;
 export function getMemoryUsage() {
   const used = process.memoryUsage();
@@ -79,8 +87,12 @@ export function distinctKey<T>(array: T[], key: keyof T): T[] {
   return Array.from(map.values());
 }
 
-export function getPairIds(pairs: Pair[]): string[] {
-  return pairs.map(toKey);
+export function toPairId(element: any): PairId {
+  return `${element.token0.id}_${element.token1.id}`;
+}
+
+export function getPairIds(pools: GraphPoolData[]): PairId[] {
+  return pools.map((p) => p.pairId);
 }
 
 export function delay(ms: number): Promise<void> {

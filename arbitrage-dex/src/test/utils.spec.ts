@@ -1,15 +1,14 @@
-import { expect, assert } from "chai";
-import { DexDataHandler } from "../graph/DexDataHandler";
-import { distinct, getPairIds, pairToPools } from "../utils/utils";
+import { assert } from "chai";
+import { distinct, getPairIds } from "../utils/utils";
 import { Fs } from "../utils/fs.module";
-import { Pair } from "../graph/types";
 import { join } from "path";
+import { GraphPoolData } from "../models/GraphPool";
 
 describe("test", async () => {
-  const uni3 = await Fs.loadFileAsync<Pair[]>(
+  const uni3 = await Fs.loadFileAsync<GraphPoolData[]>(
     join(__dirname, "/data/uniswapv3mini.json")
   ); //4
-  const sushi2 = await Fs.loadFileAsync<Pair[]>(
+  const sushi2 = await Fs.loadFileAsync<GraphPoolData[]>(
     join(__dirname, "/data/sushiv2mini.json")
   ); //6
 
