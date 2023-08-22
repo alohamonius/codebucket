@@ -41,3 +41,25 @@ TODO:
 - Use node server
 
 <p align="center"> <img src="https://komarev.com/ghpvc/?username=alohamonius&label=Profile%20views&color=0e75b6&style=flat" alt="alohamonius" /> </p>
+
+This repository about code examples in Solidity and JS, based on hardhat sample.
+
+Solidity tools:
+
+- hardhat deploy
+- hardhat gas-reporter
+- coverage
+
+Contracts:
+
+- Airdrop (merkletree drop)
+- Lottery (chainlink VRF)
+- StorageTester (data storage tester)
+- ERC721 stake -> ERC20 rewards
+- Marketplace (ERC721 with mock weth)
+
+GAS OPTIMISATION TRICKS:
+
+- use errors instead of require
+- external instead of public (copy args)
+-

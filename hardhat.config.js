@@ -12,7 +12,7 @@ require('@openzeppelin/hardhat-upgrades');
 
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY;
 const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL;
-const PRIVATE_KEY = process.env.PRIVATE_KEY;
+const GOERLI_DEPLOYER = process.env.GOERLI_DEPLOYER;
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
 const MATIC_RPC_URL = process.env.MATIC_RPC_URL;
 const MATIC_DEPLOYER = process.env.MATIC_DEPLOYER;
@@ -22,7 +22,6 @@ module.exports = {
 	networks: {
 		hardhat: {
 			chainId: 31337,
-			url: 'https://eth-mainnet.public.blastapi.io',
 		},
 		forkETH: {
 			url: 'https://eth-mainnet.public.blastapi.io',
@@ -42,9 +41,10 @@ module.exports = {
 
 		goerli: {
 			url: GOERLI_RPC_URL,
-			accounts: [PRIVATE_KEY],
+			accounts: [GOERLI_DEPLOYER],
 			chainId: 5,
 			blockConfirmations: 6,
+			deploy: ['deploy/goerli/'],
 		},
 	},
 	solidity: {
@@ -72,8 +72,5 @@ module.exports = {
 		player: {
 			default: 1,
 		},
-	},
-	paths: {
-		tests: './test/unit', //TODO: IDK what to do with TokenWrapper to run on fork network.
 	},
 };

@@ -55,6 +55,7 @@ const networkConfig = {
 	},
 };
 const developmentChains = ['hardhat', 'localhost'];
+const goerli = 'goerli';
 const forkChains = ['forkETH'];
 const DECIMALS = 8;
 const INITIAL_AMSWER = 1470000000000;
@@ -65,4 +66,5 @@ module.exports = {
 	DECIMALS,
 	INITIAL_AMSWER,
 	forkChains,
+	goerli,
 };
