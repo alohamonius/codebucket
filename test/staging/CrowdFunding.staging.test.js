@@ -3,7 +3,7 @@ const { deployments, ethers, getNamedAccounts, network } = require('hardhat');
 const { developmentChains } = require('../../helper-hardhat-config.js');
 const { crowdFunding } = require('../../utils/constant.js');
 
-developmentChains.includes(network.name)
+!developmentChains.includes(network.name)
 	? describe.skip
 	: describe(`${crowdFunding} staging`, async () => {
 			let contract, deployer;
