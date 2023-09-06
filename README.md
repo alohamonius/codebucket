@@ -1,4 +1,4 @@
-<h3 align="center">Welcome to my portfolio, where I showcase my proficiency in WEB3 development</h3>
+<h3 align="center">WEB3 code examples</h3>
 
 ![deploy_sol_badge](https://github.com/alohamonius/codebucket/actions/workflows/solidity-deploy.yml/badge.svg?branch=main)
 
@@ -42,6 +42,9 @@ Contracts:
 - StorageTester (data storage tester)
 - ERC721 stake -> ERC20 rewards
 - Marketplace (ERC721 with mock weth)
+- VerifySignature
+- CrowdFunding
+- NFTstaker
 
 GAS OPTIMISATION TRICKS:
 
@@ -49,4 +52,3 @@ GAS OPTIMISATION TRICKS:
 - external instead of public (copy args)
 -
 
-npx hardhat test --grep "NAME"

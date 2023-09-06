@@ -4,7 +4,9 @@ on:
   push:
     branches: [main]
     paths:
-      - "./**"
+      - "./contracts/**"
+      - "./deploy/**"
+      - "./test/**"
       - ".github/workflows/**"
 jobs:
   test-contracts:
