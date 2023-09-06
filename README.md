@@ -25,7 +25,7 @@ Basic contracts cases with openzeppelin, mocks and hardhat deploy mechanism.
 - VRF (LINK) function case (random lottery)
 - Storage class (funwithStorage.js + .sol)
 
-<p align="center"> <img src="https://komarev.com/ghpvc/?username=alohamonius&label=Profile%20views&color=0e75b6&style=flat" alt="alohamonius" /> </p>
+
 
 This repository about code examples in Solidity and JS, based on hardhat sample.
 
@@ -50,5 +50,5 @@ GAS OPTIMISATION TRICKS:
 
 - use errors instead of require
 - external instead of public (copy args)
--
 
+<p align="center"> <img src="https://komarev.com/ghpvc/?username=alohamonius&label=Profile%20views&color=0e75b6&style=flat" alt="alohamonius" /> </p>
