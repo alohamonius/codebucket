@@ -17,8 +17,8 @@ jobs:
         with:
           node-version: "16"
       - name: "Create env file"
-        run: |
-          echo "${{ secrets.ENV_DEV }}" > ".env.$CODEBUCKET_ENV"
+        run: |  
+          echo "${{ secrets.ENV_DEV }}" > ".env.${{env.CODEBUCKET_ENV}}"
       - name: Install dependencies
         run: yarn install
       - name: Test

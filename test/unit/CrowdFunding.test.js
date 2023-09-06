@@ -46,6 +46,21 @@ const { crowdFunding } = require('../../utils/constant.js');
 					const funder = await contract.getFunder(0);
 					assert.equal(funder, deployer);
 				});
+
+				it('allow to fund', async () => {
+					const fundTxResponse = await contract.fund({
+						value: valueToFund,
+					});
+					await fundTxResponse.wait(1);
+					const withdrawTxResponse = await contract.withdraw();
+					await withdrawTxResponse.wait(1);
+
+					const endBalance = await contract.provider.getBalance(
+						contract.address
+					);
+
+					assert.equal(endBalance.toString(), '0');
+				});
 			});
 
 			describe('withdraw', () => {
