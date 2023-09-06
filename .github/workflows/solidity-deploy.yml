@@ -18,8 +18,8 @@ jobs:
           node-version: "16"
       - name: "Create env file"
         run: |
-          cd solidity && echo "${{ secrets.ENV_DEV }}" > ".env.$CODEBUCKET_ENV"
+          echo "${{ secrets.ENV_DEV }}" > ".env.$CODEBUCKET_ENV"
       - name: Install dependencies
-        run: cd solidity && yarn install
+        run: yarn install
       - name: Test
-        run: cd solidity && npx hardhat test
+        run: npx hardhat test

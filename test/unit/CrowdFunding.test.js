@@ -9,7 +9,7 @@ const { crowdFunding } = require('../../utils/constant.js');
 			const valueToFund = ethers.utils.parseEther('1');
 			beforeEach(async function () {
 				deployer = (await getNamedAccounts()).deployer;
-				await deployments.fixture(['all']);
+				await deployments.fixture(['mocks', 'crowd']);
 
 				contract = await ethers.getContract(crowdFunding, deployer);
 				mockV3Aggregator = await ethers.getContract(

@@ -2,8 +2,8 @@ const { network, ethers } = require('hardhat');
 const {
 	developmentChains,
 	networkConfig,
-} = require('../helper-hardhat-config');
-const { formatText } = require('../utils/helper');
+} = require('../../helper-hardhat-config');
+const { formatText } = require('../../utils/helper');
 
 const DEPLOY_NAME = 'ProxyTest';
 
@@ -14,7 +14,7 @@ module.exports = async (hre) => {
 	log(formatText(DEPLOY_NAME + ' STARTED'));
 
 	if (developmentChains.includes(network.name)) {
-		const proxy = await ethers.getContractFactory('ProxyTest');
+		const proxy = await ethers.getContractFactory('ProxyTestV1');
 		Proxy = await upgrades.deployProxy(proxy, [], {
 			initializer: false,
 		});

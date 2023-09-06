@@ -40,4 +40,4 @@ module.exports = async (hre) => {
 	}
 };
 
-module.exports.tags = ['all', 'MyTokenOnDex'];
+module.exports.tags = ['MyTokenOnDex'];

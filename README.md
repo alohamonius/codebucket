@@ -14,15 +14,6 @@
 <img src="https://www.solodev.com/file/13466e21-dd2c-11ec-b9ad-0eaef3759f5f/Hardhat-Logo-Icon.png" alt="javascript" width="40" height="40"/> </a> <a href="https://hardhat.org/" target="_blank" rel="noreferrer">
 </p>
 
-## Node
-
-Explore integrations with 3rd party contracts, APIs for seamless web3 interaction.
-
-- SUI Frenemies game in node/bot/sui.
-- APTOS Quickswap event listener in node/bot/aptos
-- EVM Dexes arbitrage: node/arbitrage. (ETH/BSC) & (uniswap, pancake)
-- 1inch, ANKR
-
 ## Solidity
 
 Basic contracts cases with openzeppelin, mocks and hardhat deploy mechanism.
@@ -33,12 +24,6 @@ Basic contracts cases with openzeppelin, mocks and hardhat deploy mechanism.
 - Deploy&Verification of contract (hardhat)
 - VRF (LINK) function case (random lottery)
 - Storage class (funwithStorage.js + .sol)
-
-TODO:
-
-- Move contracts from old repo
-- Group them
-- Use node server
 
 <p align="center"> <img src="https://komarev.com/ghpvc/?username=alohamonius&label=Profile%20views&color=0e75b6&style=flat" alt="alohamonius" /> </p>
 
@@ -63,3 +48,5 @@ GAS OPTIMISATION TRICKS:
 - use errors instead of require
 - external instead of public (copy args)
 -
+
+npx hardhat test --grep "NAME"

@@ -2,9 +2,9 @@ const { network, ethers } = require('hardhat');
 const {
 	developmentChains,
 	networkConfig,
-} = require('../helper-hardhat-config');
+} = require('../../helper-hardhat-config');
 const DEPLOY_NAME = 'NFT-STAKE-TO-ERC20';
-const { formatText } = require('../utils/helper');
+const { formatText } = require('../../utils/helper');
 
 module.exports = async (hre) => {
 	const { getNamedAccounts, deployments } = hre;

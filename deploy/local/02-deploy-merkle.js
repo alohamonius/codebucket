@@ -1,5 +1,5 @@
 const { network } = require('hardhat');
-const { generateMerkleTree } = require('../utils/merkleUtils');
+const { generateMerkleTree } = require('../../utils/merkleUtils');
 module.exports = async (hre) => {
 	const { getNamedAccounts, deployments } = hre;
 	const { deploy, log, get } = deployments;

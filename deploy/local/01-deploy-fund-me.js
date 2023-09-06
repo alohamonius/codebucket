@@ -2,9 +2,9 @@ const { network } = require('hardhat');
 const {
 	networkConfig,
 	developmentChains,
-} = require('../helper-hardhat-config');
-const { verify } = require('../utils/verify');
-const { crowdFunding } = require('../utils/constant');
+} = require('../../helper-hardhat-config');
+const { verify } = require('../../utils/verify');
+const { crowdFunding } = require('../../utils/constant');
 module.exports = async (hre) => {
 	const { getNamedAccounts, deployments } = hre;
 

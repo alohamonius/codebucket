@@ -2,8 +2,8 @@ const { network, ethers } = require('hardhat');
 const {
 	developmentChains,
 	networkConfig,
-} = require('../helper-hardhat-config');
-const { formatText } = require('../utils/helper');
+} = require('../../helper-hardhat-config');
+const { formatText } = require('../../utils/helper');
 
 const DEPLOY_NAME = 'NFT-MARKETPLACE';
 

@@ -3,8 +3,8 @@ const {
 	developmentChains,
 	networkConfig,
 	forkChains,
-} = require('../helper-hardhat-config');
-const { formatText } = require('../utils/helper');
+} = require('../../helper-hardhat-config');
+const { formatText } = require('../../utils/helper');
 
 const DEPLOY_NAME = 'TokenWrapper';
 

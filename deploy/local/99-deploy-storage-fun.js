@@ -1,9 +1,8 @@
-const { ethers, getNamedAccounts } = require('hardhat');
 const { network, ethers } = require('hardhat');
-const { developmentChains } = require('../helper-hardhat-config');
-const { verify } = require('../utils/verify');
+const { developmentChains } = require('../../helper-hardhat-config');
+const { verify } = require('../../utils/verify');
 
-async function main() {
+module.exports = async ({ getNamedAccounts, deployments }) => {
 	const { deploy, log } = deployments;
 	const { deployer } = await getNamedAccounts();
 
@@ -42,14 +41,7 @@ async function main() {
 
 		log(`Location ${i}: ${storageData}`);
 	}
-}
-
-main()
-	.then(() => process.exit(0))
-	.catch((error) => {
-		console.error(error);
-		process.exit(1);
-	});
+};
 
 async function getMappingData(contractAddress, type, data) {
 	let locationMappingData = ethers.BigNumber.from(
@@ -79,3 +71,5 @@ async function getArrayData(contractAddress, type, slot) {
 	}
 	return data;
 }
+
+module.exports.tags = ['storage'];

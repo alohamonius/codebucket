@@ -1,27 +1,23 @@
-const { assert, expect } = require('chai');
+const { assert } = require('chai');
 const BigNumber = require('bignumber.js');
 BigNumber.config({ DECIMAL_PLACES: 19 });
-const { toSeconds, getEvent, callAndWait } = require('../../utils/helper');
-const {
-	developmentChains,
-	forkChains,
-	networkConfig,
-} = require('../../helper-hardhat-config.js');
+const { getEvent } = require('../../utils/helper');
+const { forkChains } = require('../../helper-hardhat-config.js');
 const { ethers } = require('hardhat');
 
 const ERC20ABI = require('@uniswap/v2-core/build/ERC20.json').abi;
-!developmentChains.includes(network.name)
+!forkChains.includes(network.name)
 	? describe.skip
 	: describe('TokenWrapper', async () => {
 			let TokenWrapper, deployer;
 			const usdc = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
 			const vitalikAddress = '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045';
 
-			const some = '0x03ab458634910AaD20eF5f1C8ee96F1D6ac54919';
+			const some_token = '0x03ab458634910AaD20eF5f1C8ee96F1D6ac54919';
 			const USDC = new ethers.Contract(usdc, ERC20ABI, ethers.provider);
 
 			const SOME_ERC20 = new ethers.Contract(
-				some,
+				some_token,
 				ERC20ABI,
 				ethers.provider
 			);
@@ -69,12 +65,14 @@ const ERC20ABI = require('@uniswap/v2-core/build/ERC20.json').abi;
 					.approve(TokenWrapper.address, ethers.constants.MaxUint256)
 					.then((tx) => tx.wait());
 
-				await TokenWrapper.connect(owner).setAllowedTokens([some]);
+				await TokenWrapper.connect(owner).setAllowedTokens([
+					some_token,
+				]);
 
 				const wrapReceipt = await TokenWrapper.connect(signerWithUsdt)
 					.wrap([
 						{
-							tokenAddress: some,
+							tokenAddress: some_token,
 							amount: balanceBefore,
 						},
 					])
